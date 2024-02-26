@@ -22,7 +22,7 @@ function generateDisplayComponent(config: GeneratedCodeConfig) {
           <span className="font-semibold">react</span> +{" "}
           <span className="font-semibold">native</span>
         </div>
-      );  
+      );
     case GeneratedCodeConfig.REACT_TAILWIND:
       return (
         <div>
@@ -44,7 +44,7 @@ function generateDisplayComponent(config: GeneratedCodeConfig) {
           <span className="font-semibold">react</span> +{" "}
           <span className="font-semibold">antd</span>
         </div>
-      );  
+      );
     case GeneratedCodeConfig.VUE_TAILWIND:
       return (
         <div>
@@ -66,7 +66,7 @@ function generateDisplayComponent(config: GeneratedCodeConfig) {
           <span className="font-semibold">Bootstrap</span>
         </div>
       );
-      // VUE_TAILWIND 
+    // VUE_TAILWIND
     // case GeneratedCodeConfig.IONIC_TAILWIND:
     //   return (
     //     <div>
@@ -106,30 +106,30 @@ function OutputSettingsSection({
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value={GeneratedCodeConfig.HTML_TAILWIND}>
+              {/* <SelectItem value={GeneratedCodeConfig.HTML_TAILWIND}>
                 {generateDisplayComponent(GeneratedCodeConfig.HTML_TAILWIND)}
-              </SelectItem>
+              </SelectItem> */}
               <SelectItem value={GeneratedCodeConfig.REACT_TAILWIND}>
                 {generateDisplayComponent(GeneratedCodeConfig.REACT_TAILWIND)}
               </SelectItem>
-              <SelectItem value={GeneratedCodeConfig.REACT_SHADCN_UI}>
+              {/* <SelectItem value={GeneratedCodeConfig.REACT_SHADCN_UI}>
                 {generateDisplayComponent(GeneratedCodeConfig.REACT_SHADCN_UI)}
-              </SelectItem>
+              </SelectItem> */}
               <SelectItem value={GeneratedCodeConfig.REACT_ANTD}>
                 {generateDisplayComponent(GeneratedCodeConfig.REACT_ANTD)}
               </SelectItem>
-              <SelectItem value={GeneratedCodeConfig.REACT_NATIVE}>
+              {/* <SelectItem value={GeneratedCodeConfig.REACT_NATIVE}>
                 {generateDisplayComponent(GeneratedCodeConfig.REACT_NATIVE)}
               </SelectItem>
               <SelectItem value={GeneratedCodeConfig.VUE_TAILWIND}>
                 {generateDisplayComponent(GeneratedCodeConfig.VUE_TAILWIND)}
-              </SelectItem>
+              </SelectItem> */}
               {/* <SelectItem value={GeneratedCodeConfig.VUE_ELEMENT}>
                 {generateDisplayComponent(GeneratedCodeConfig.VUE_ELEMENT)}
               </SelectItem> */}
-              <SelectItem value={GeneratedCodeConfig.BOOTSTRAP}>
+              {/* <SelectItem value={GeneratedCodeConfig.BOOTSTRAP}>
                 {generateDisplayComponent(GeneratedCodeConfig.BOOTSTRAP)}
-              </SelectItem>
+              </SelectItem> */}
               {/* <SelectItem value={GeneratedCodeConfig.IONIC_TAILWIND}>
                 {generateDisplayComponent(GeneratedCodeConfig.IONIC_TAILWIND)}
               </SelectItem> */}
@@ -157,38 +157,36 @@ function OutputSettingsSection({
 export const TechnologyStackList = [
   {
     label: GeneratedCodeConfig.HTML_TAILWIND,
-    value: 'HTML + tailwind'
+    value: "HTML + tailwind",
   },
   {
     label: GeneratedCodeConfig.REACT_TAILWIND,
-    value: 'react + tailwind'
+    value: "react + tailwind",
   },
   {
     label: GeneratedCodeConfig.REACT_SHADCN_UI,
-    value: 'react + shadcn/ui'
+    value: "react + shadcn/ui",
   },
   {
     label: GeneratedCodeConfig.REACT_ANTD,
-    value: 'react + antd'
+    value: "react + antd",
   },
   {
     label: GeneratedCodeConfig.VUE_TAILWIND,
-    value: 'vue + tailwind'
+    value: "vue + tailwind",
   },
   {
     label: GeneratedCodeConfig.VUE_ELEMENT,
-    value: 'vue + element'
+    value: "vue + element",
   },
   {
     label: GeneratedCodeConfig.REACT_NATIVE,
-    value: 'react + native'
+    value: "react + native",
   },
   {
     label: GeneratedCodeConfig.BOOTSTRAP,
-    value: 'bootstrap'
-  }
-]
-
-
+    value: "bootstrap",
+  },
+];
 
 export default OutputSettingsSection;
