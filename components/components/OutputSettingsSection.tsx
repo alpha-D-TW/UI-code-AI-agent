@@ -155,38 +155,38 @@ function OutputSettingsSection({
 // }
 
 export const TechnologyStackList = [
-  {
-    label: GeneratedCodeConfig.HTML_TAILWIND,
-    value: "HTML + tailwind",
-  },
+  // {
+  //   label: GeneratedCodeConfig.HTML_TAILWIND,
+  //   value: "HTML + tailwind",
+  // },
   {
     label: GeneratedCodeConfig.REACT_TAILWIND,
     value: "react + tailwind",
   },
-  {
-    label: GeneratedCodeConfig.REACT_SHADCN_UI,
-    value: "react + shadcn/ui",
-  },
+  // {
+  //   label: GeneratedCodeConfig.REACT_SHADCN_UI,
+  //   value: "react + shadcn/ui",
+  // },
   {
     label: GeneratedCodeConfig.REACT_ANTD,
     value: "react + antd",
   },
-  {
-    label: GeneratedCodeConfig.VUE_TAILWIND,
-    value: "vue + tailwind",
-  },
-  {
-    label: GeneratedCodeConfig.VUE_ELEMENT,
-    value: "vue + element",
-  },
-  {
-    label: GeneratedCodeConfig.REACT_NATIVE,
-    value: "react + native",
-  },
-  {
-    label: GeneratedCodeConfig.BOOTSTRAP,
-    value: "bootstrap",
-  },
+  // {
+  //   label: GeneratedCodeConfig.VUE_TAILWIND,
+  //   value: "vue + tailwind",
+  // },
+  // {
+  //   label: GeneratedCodeConfig.VUE_ELEMENT,
+  //   value: "vue + element",
+  // },
+  // {
+  //   label: GeneratedCodeConfig.REACT_NATIVE,
+  //   value: "react + native",
+  // },
+  // {
+  //   label: GeneratedCodeConfig.BOOTSTRAP,
+  //   value: "bootstrap",
+  // },
 ];
 
 export default OutputSettingsSection;
