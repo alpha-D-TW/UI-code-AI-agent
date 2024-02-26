@@ -149,14 +149,14 @@ export default function Dashboard() {
                     )
                 } */}
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
-            {/* <h1 className="text-2xl font-bold">Templates</h1> */}
-            {/* <nav className="hidden md:flex space-x-10">
+          {/* <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10"> */}
+          {/* <h1 className="text-2xl font-bold">Templates</h1> */}
+          {/* <nav className="hidden md:flex space-x-10">
                             <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">
                             Prompts
                             </a>
                         </nav> */}
-          </div>
+          {/* </div> */}
 
           {/* <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
             {templates.list.map((template) => {
@@ -209,7 +209,7 @@ export default function Dashboard() {
             />
           </div> */}
         </div>
-        <div className="mt-[50px] w-[100%] p-2">
+        {/* <div className="mt-[50px] w-[100%] p-2">
           <p className="text-slate-300 text-center">
             © Copyright{" "}
             <a
@@ -220,7 +220,7 @@ export default function Dashboard() {
             </a>{" "}
             All rights reserved.
           </p>
-        </div>
+        </div> */}
       </main>
 
       <div
