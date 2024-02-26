@@ -9,15 +9,16 @@ import Spinner from "../Spinner";
 
 const shortcutIdeas = [
   {
-    id: "Productcategories",
-    label: "Product categories",
-    value: "A list of product categories with image, name and description.",
+    id: "InsuranceProductCategories",
+    label: "Insurance product list",
+    value:
+      "A list of insurance product categories with image, name and description.",
   },
   {
-    id: "HeroSection",
-    label: "Hero section",
+    id: "InsuranceProductDetail",
+    label: "Insurance product list",
     value:
-      "A landing page hero section with a heading, leading text and an opt-in form.",
+      "A detail of insurance product with image, name and description and suitable people",
   },
   // {
   //   id: 'Contactform',
@@ -25,10 +26,10 @@ const shortcutIdeas = [
   //   value: 'A contact form with first name, last name, email, and message fields. Put the form in a card with a submit button.'
   // },
   {
-    id: "Ecommercedashboard",
-    label: "Ecommerce dashboard",
+    id: "InsurancePriceCalculate",
+    label: "Insurance Price Calculate",
     value:
-      "An ecommerce dashboard with a sidebar navigation and a table of recent orders.",
+      "A detail of insurance product price calcuate with img, name, description, price rule and total css ",
   },
 ];
 
