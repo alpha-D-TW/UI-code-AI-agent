@@ -4,8 +4,8 @@ import { Settings } from "../types";
 import copy from "copy-to-clipboard";
 import { useCallback } from "react";
 import toast from "react-hot-toast";
-import * as monaco from 'monaco-editor';
-import Editor, { loader } from '@monaco-editor/react';
+import * as monaco from "monaco-editor";
+import Editor, { loader } from "@monaco-editor/react";
 
 loader.config({ monaco });
 
@@ -16,15 +16,14 @@ interface Props {
 }
 
 function CodeTab({ code, setCode, settings }: Props) {
-  
   return (
-    <div className="relative h-full flex flex-col">
+    <div className="relative h-full flex flex-co border border-gray-40">
       <Editor
-        defaultLanguage="html" 
-        defaultValue="" 
+        defaultLanguage="html"
+        defaultValue=""
         value={code}
         onChange={(value) => {
-          setCode(value as string)
+          setCode(value as string);
         }}
       />
     </div>
