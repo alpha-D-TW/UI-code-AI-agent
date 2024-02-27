@@ -52,6 +52,7 @@ export async function streamGenerateCode(
         params["promptCode"],
         params.slug,
         initTemplateCode,
+        params["themeConfig"],
         params["resultImage"]
       );
     } else {
@@ -61,7 +62,8 @@ export async function streamGenerateCode(
         generated_code_config,
         params["promptCode"],
         params.slug,
-        initTemplateCode
+        initTemplateCode,
+        params["themeConfig"]
       );
     }
   } catch (e) {
