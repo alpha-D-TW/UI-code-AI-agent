@@ -32,10 +32,18 @@ export interface Settings {
   init: boolean;
   llm: string;
   geminiApiKey: string;
+  themeConfig: ThemeCodeConfig;
 }
 
 export enum AppState {
   INITIAL = "INITIAL",
   CODING = "CODING",
   CODE_READY = "CODE_READY",
+}
+
+export enum ThemeCodeConfig {
+  DEFAULT_THEME = "default_theme",
+  THEME_1 = "theme_1",
+  THEME_2 = "theme_2",
+  THEME_3 = "theme_3",
 }

@@ -358,9 +358,9 @@ function App() {
     // Re-enter the code.
     //     `;
     const updatePrompt = `
-Find the element with attribute data-uid="${uid}" and change it as described below:
-${message}
-Re-output the code and do not need to output the data-uid attribute.
+      Find the element with attribute data-uid="${uid}" and change it as described below:
+      ${message}
+      Re-output the code and do not need to output the data-uid attribute.
     `;
     setPartValue(partData);
     setUpdateInstruction(updatePrompt);
@@ -378,10 +378,10 @@ Re-output the code and do not need to output the data-uid attribute.
 
   async function fixBug(error: { message: string; stack: string }) {
     const errorPrompt = `
-Fix the code error and re-output the code.
-error message:
-${error.message}
-${error.stack}
+      Fix the code error and re-output the code.
+      error message:
+      ${error.message}
+      ${error.stack}
     `;
     setUpdateInstruction(errorPrompt);
   }

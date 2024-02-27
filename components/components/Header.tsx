@@ -3,11 +3,12 @@ import SettingsDialog from "./SettingsDialog";
 import { SettingContext } from "../contexts/SettingContext";
 import { useContext, useState } from "react";
 import OutputSettingsSection from "./OutputSettingsSection";
-import { GeneratedCodeConfig } from "../types";
+import { GeneratedCodeConfig, ThemeCodeConfig } from "../types";
 import { MdOutlineHelp } from "react-icons/md";
 import { SiBuymeacoffee } from "react-icons/si";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
 import OnboardingNote from "./OnboardingNote";
+import ThemeSettingsSection from "./ThemeSettingsSection";
 
 export default () => {
   const { settings, setSettings } = useContext(SettingContext);
@@ -28,6 +29,17 @@ export default () => {
                   setSettings({
                     ...settings,
                     generatedCodeConfig: config,
+                  })
+                }
+              />
+            </li>
+            <li className="mx-2">
+              <ThemeSettingsSection
+                generatedThemeConfig={settings.themeConfig}
+                setGeneratedThemeConfig={(config: ThemeCodeConfig) =>
+                  setSettings({
+                    ...settings,
+                    themeConfig: config,
                   })
                 }
               />
