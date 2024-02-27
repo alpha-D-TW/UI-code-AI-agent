@@ -32,7 +32,19 @@ const initialValue = {
 export const HistoryContext = createContext<historyContextType>(initialValue);
 
 export default function SettingProvider({ children }: { children: ReactNode }) {
-    const [history , setHistory] = useState<History>([]);
+    // const [history , setHistory] = useState<History>([]);
+    const [history , setHistory] = useState<History>(() => {
+      if(typeof window !== 'undefined') {
+        const storedHistory = localStorage.getItem('history');
+        return storedHistory ? JSON.parse(storedHistory) : [];
+      }
+      return [];
+    });
+
+    useEffect(() => {
+      localStorage.setItem('history', JSON.stringify(history));
+    }, [history])
+
     let [currentVersion, setCurrentVersionStatus] = useState<number | null>(null);
 
     function addHistory (generationType: string, updateInstruction: string, referenceImages: string[], initText: string, code: string, originMessage: string) {
@@ -108,6 +120,7 @@ export default function SettingProvider({ children }: { children: ReactNode }) {
     }
 
     function resetHistory() {
+      //liujia history todo: should not clear history when destory page
       setHistory([]);
       setCurrentVersionStatus(0);
     }
