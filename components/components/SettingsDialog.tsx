@@ -54,6 +54,11 @@ function SettingsDialog({
             <span className="text-sm font-bold mr-2">Setting Key </span>
           </>
         )}
+        {settings?.openAiApiKey && settings?.llm && (
+          <span className="text-sm font-bold mr-2">
+            {settings?.llm.toUpperCase()}
+          </span>
+        )}
         <FaCog />
       </DialogTrigger>
       <DialogContent>
@@ -97,10 +102,10 @@ function SettingsDialog({
                 <span className="mr-2">OpenAI</span>
                 <RadioGroupItem value="openai" id="openai-llm" />
               </Label>
-              <Label className="flex item-center" htmlFor="gemini-llm">
+              {/* <Label className="flex item-center" htmlFor="gemini-llm">
                 <span className="mr-2">Gemini</span>
                 <RadioGroupItem value="gemini" id="gemini-llm" />
-              </Label>
+              </Label> */}
             </RadioGroup>
           </div>
           {settings.llm === "openai" ? (
