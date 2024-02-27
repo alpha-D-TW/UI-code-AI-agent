@@ -192,11 +192,11 @@ function TemplatePanel({ settings, setSettings }: Props) {
                 </div>
                 <div className="flex flex-col space-y-4">
                   <Label htmlFor="des">
-                    <div>des</div>
+                    <div>description</div>
                   </Label>
                   <Input
                     id="des"
-                    placeholder="des"
+                    placeholder="description"
                     value={template.description}
                     onChange={(e) => {
                       setTemplate((s) => ({
