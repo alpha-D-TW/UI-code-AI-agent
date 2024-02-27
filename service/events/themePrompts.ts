@@ -119,7 +119,7 @@ const THEME_3_PROMPT = `
 `;
 
 export const THEME_MAP = {
-  THEME_1: THEME_1_PROMPT,
-  THEME_2: THEME_3_PROMPT,
-  THEME_3: THEME_3_PROMPT,
+  theme_1: THEME_1_PROMPT,
+  theme_2: THEME_2_PROMPT,
+  theme_3: THEME_3_PROMPT,
 };

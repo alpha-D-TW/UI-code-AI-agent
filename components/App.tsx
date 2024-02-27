@@ -433,24 +433,32 @@ function App() {
           {(appState === AppState.CODING ||
             appState === AppState.CODE_READY) && (
             <>
+              <Button
+                onClick={() => {
+                  reset();
+                  router.push("/", { scroll: false });
+                }}
+              >
+                <FaHome style={{ marginRight: "6px" }} />
+                HOME
+              </Button>
               {/* {appState === AppState.CODING && (
                 <div>
                    <CodePreview code={generatedCode}/>
                  </div>
               )} */}
               {/* Show code preview only when coding */}
-              {/* {appState === AppState.CODING && (
-                <div className="flex flex-col">
-                  <div className="flex w-full">
-                    <Button
-                      onClick={stop}
-                      className="w-full dark:text-white dark:bg-gray-700"
-                    >
-                      Stop
-                    </Button>
-                  </div>
+              <div className="flex flex-col">
+                <div className="flex w-full">
+                  <Button
+                    onClick={stop}
+                    className="w-full dark:text-white dark:bg-gray-700"
+                    disabled={appState === AppState.CODE_READY}
+                  >
+                    Stop
+                  </Button>
                 </div>
-              )} */}
+              </div>
 
               {/* <div>
                 <div className="grid w-full gap-2">
@@ -469,15 +477,6 @@ function App() {
 
               {/* Reference image display */}
               <div className="flex flex-col mt-2">
-                <Button
-                  onClick={() => {
-                    reset();
-                    router.push("/", { scroll: false });
-                  }}
-                >
-                  <FaHome />
-                  HOME
-                </Button>
                 <div className="flex flex-col">
                   <h1 className="font-bold mb-2 mt-4">Original Info</h1>
                   <div>
