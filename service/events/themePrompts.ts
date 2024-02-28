@@ -27,6 +27,7 @@ const THEME_1_PROMPT = `
     document.getElementById('root')
   );
   For the requirement description, use the colors declared by the config in the custom theme.
+  Start with <!DOCTYPE html>
 `;
 
 const THEME_2_PROMPT = `
@@ -57,7 +58,8 @@ const THEME_2_PROMPT = `
     </ConfigProvider>,
     document.getElementById('root')
   );
- For the requirement description, use the colors declared by config in the custom theme.
+  For the requirement description, use the colors declared by config in the custom theme.
+  Start with <!DOCTYPE html>
 `;
 
 const THEME_3_PROMPT = `
@@ -89,6 +91,7 @@ const THEME_3_PROMPT = `
     document.getElementById('root')
   );
   For the requirement description, use the colors declared by config in the custom theme.
+  Start with <!DOCTYPE html>
 `;
 
 export const THEME_MAP = {
