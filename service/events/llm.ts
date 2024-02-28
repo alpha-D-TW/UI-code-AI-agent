@@ -34,7 +34,7 @@ function transformData(data: Record<any, any>[]) {
           } else if (part.type === "image_url") {
             // 提取MIME类型和base64数据
             const { mimeType, base64Data } = extractMimeAndBase64(
-              part.image_url.url
+                part.image_url.url
             );
             parts.push({
               inlineData: {
@@ -76,10 +76,10 @@ const safetySettings = [
   },
 ];
 async function useGeminiResponse([messages, callback, params]: Parameters<
-  typeof streamingOpenAIResponses
+    typeof streamingOpenAIResponses
 >) {
   let genAI = new GoogleGenerativeAI(
-    params.geminiApiKey || process.env["GEMINI_API_KEY"]
+      params.geminiApiKey || process.env["GEMINI_API_KEY"]
   );
   const generationConfig = {
     temperature: 0,
@@ -111,8 +111,8 @@ async function useGeminiResponse([messages, callback, params]: Parameters<
       text += perText;
     }
     const chunkText = text
-      ? chunk.text()
-      : chunk.text().replace(/^\s*```html/g, "");
+        ? chunk.text()
+        : chunk.text().replace(/^\s*```html/g, "");
     perText = chunkText;
   }
   perText = perText.replace(/```\s*$/g, "");
@@ -123,21 +123,45 @@ async function useGeminiResponse([messages, callback, params]: Parameters<
 
 
 export async function streamingOpenAIResponses(
-  messages: any,
-  callback: {
-    (content: string, event?: string | undefined): void;
-    (arg0: string, arg1: string | undefined): void;
-  },
-  params: {
-    openAiApiKey: any;
-    openAiBaseURL: any;
-    llm: string;
-    geminiApiKey: any;
-  }
+    messages: any,
+    callback: {
+      (content: string, event?: string | undefined): void;
+      (arg0: string, arg1: string | undefined): void;
+    },
+    params: {
+      openAiApiKey: any;
+      openAiBaseURL: any;
+      llm: string;
+      geminiApiKey: any;
+    }
 ) {
 
   if (params.llm === "gemini") {
-    const full_response = await useGeminiResponse([messages, callback, params]);
+    console.log('start use moonshot');
+    if (!params.geminiApiKey) {
+      callback('No Moonshot key, set it', 'error');
+      return '';
+    }
+    const openai = new OpenAI({
+      apiKey: params.geminiApiKey || process.env['OPENAI_API_KEY'], // defaults to process.env["OPENAI_API_KEY"]
+      baseURL: 'https://api.moonshot.cn/v1'
+    });
+
+    const stream = await openai.chat.completions.create({
+      model: 'moonshot-v1-8k',
+      temperature: 0,
+      max_tokens: 4096,
+      messages,
+      stream: true,
+    });
+    console.log('end use moonshot');
+    let full_response = '';
+    for await (const chunk of stream) {
+      const content = chunk.choices[0]?.delta?.content || '';
+      full_response += content;
+      callback(content);
+    }
+
     return full_response;
   }
 
@@ -148,9 +172,9 @@ export async function streamingOpenAIResponses(
   const openai = new OpenAI({
     apiKey: params.openAiApiKey || process.env['OPENAI_API_KEY'], // defaults to process.env["OPENAI_API_KEY"]
     baseURL:
-      params.openAiBaseURL ||
-      process.env['OPENAI_BASE_URL'] ||
-      'https://api.openai.com/v1',
+        params.openAiBaseURL ||
+        process.env['OPENAI_BASE_URL'] ||
+        'https://api.openai.com/v1',
   });
 
   const stream = await openai.chat.completions.create({
