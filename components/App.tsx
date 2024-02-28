@@ -313,7 +313,7 @@ function App() {
           params.generationType,
           updateInstruction,
           referenceImages,
-          referenceText,
+          params.text || "",
           code,
           partValue.message
         );

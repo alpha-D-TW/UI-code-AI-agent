@@ -1,17 +1,13 @@
 import { useState, useRef, useContext, useMemo, useEffect } from "react";
 import Header from "../components/components/Header";
 import ChatInput from "../components/components/chatInput";
-import OnboardingNote from "../components/components/OnboardingNote";
 import { SettingContext } from "../components/contexts/SettingContext";
 import { UploadFileContext } from "../components/contexts/UploadFileContext";
-import { IS_RUNNING_ON_CLOUD } from "../components/config";
 import { useRouter } from "next/router";
 import classNames from "classnames";
-import templates from "../templates/templates";
-import { FaGithubSquare } from "react-icons/fa";
+import TemplateBoxes from "@/components/components/TemplateBoxes";
 
 import dynamic from "next/dynamic";
-import { GeneratedCodeConfig } from "@/components/types";
 import TemplatePanel from "@/components/components/TemplatePanel";
 
 const Whiteboard = dynamic(
@@ -158,6 +154,7 @@ export default function Dashboard() {
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+<<<<<<< HEAD
             {templates.list.map((template) => {
               return (
                 <div
@@ -201,6 +198,9 @@ export default function Dashboard() {
                 </div>
               );
             })}
+=======
+            <TemplateBoxes></TemplateBoxes>
+>>>>>>> 800eee5 ([liujia]refactoring: extract templateBoxes component)
             <TemplatePanel
               key={"TemplatePanel"}
               settings={settings}
