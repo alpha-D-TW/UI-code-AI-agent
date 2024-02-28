@@ -43,6 +43,7 @@ import classNames from "classnames";
 import { useRouter as useNextRouter } from "next/router";
 import templates from "@/templates/templates";
 import SettingsDialog from "@/components/components/SettingsDialog";
+import Preview from "@/components/components/Preview";
 
 const CodeTab = dynamic(async () => await import("./components/CodeTab"), {
   ssr: false,
@@ -178,19 +179,66 @@ function App() {
     }
   }, [settings.generatedCodeConfig, setSettings]);
 
-  useEffect(() => {
-    const slug = nextRouter.query.slug;
-    if (slug === "create") {
-      if (dataUrls.length) {
-        initFn.run();
-      }
-      if (initCreateText) {
-        initTextFn.run();
-      }
-    } else {
-      templateFn.run();
-    }
-  }, [initCreate, dataUrls, initCreateText, template]);
+    // function validateHTML(htmlCode: string) {
+    //     const newCount = count + 1
+    //     setCount(newCount)
+    //     return new Promise((resolve, reject) => {
+    //         fetch('https://validator.w3.org/nu/?out=json', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'text/html',
+    //             },
+    //             body: htmlCode,
+    //         })
+    //             .then(response => response.json())
+    //             .then(data => {
+    //                 // 处理验证结果
+    //                 resolve(data)
+    //                 console.log(data);
+    //             })
+    //             .catch(error => {
+    //                 // 处理请求错误
+    //                 reject(error)
+    //                 console.error('请求出错:', error);
+    //             });
+    //     })
+    // }
+
+    // useEffect(() => {
+    //     if(count > 1){
+    //         return
+    //     }
+    //     if (appState === AppState.CODE_READY) {
+    //         validateHTML(generatedCode).then((result: any) => {
+    //             console.log(result,'rrrrrr------')
+    //             // const str = result.message?.splice(0).map((item: { type: string, message: string }) => {
+    //             //     return `${item.type} ${item.message}`;
+    //             // }).join(';')
+    //             // doGenerateCode(
+    //             //     {
+    //             //         generationType: "create",
+    //             //         image: referenceImages[0],
+    //             //         text: str,
+    //             //     },
+    //             //     currentVersion
+    //             // );
+    //         })
+    //     }
+    // }, [appState])
+
+    useEffect(() => {
+        const slug = nextRouter.query.slug;
+        if (slug === "create") {
+            if (dataUrls.length) {
+                initFn.run();
+            }
+            if (initCreateText) {
+                initTextFn.run();
+            }
+        } else {
+            templateFn.run();
+        }
+    }, [initCreate, dataUrls, initCreateText, template]);
 
   const takeScreenshot = async (): Promise<string> => {
     const iframeElement = document.querySelector(
@@ -652,7 +700,7 @@ function App() {
                 />
               </div>
 
-              {/* <Preview code={generatedCode} device="desktop" appState={appState} fixBug={fixBug}/> */}
+               <Preview code={generatedCode} device="desktop" appState={appState} fixBug={fixBug}/>
             </div>
             <div
               className={classNames("h-full", {
