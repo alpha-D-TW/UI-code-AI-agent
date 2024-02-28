@@ -68,45 +68,37 @@ export default function ChatInput({ openWhiteboard, showAnim }: props) {
   };
 
   return (
-    <div className="flex flex-col py-[12vh] my-12 justify-center items-center">
-      {/* animate-wiggle */}
+    <div className=" w-full flex flex-col mt-60 mb-12 justify-center items-center ">
       <div
         className={classNames(
-          "sm:max-w-lg m-auto shadow-lg divide-zinc-600 min-h-12 bg-gray-900 shadow-black/40 rounded-[24px] overflow-hidden max-w-[90%] flex items-center flex-1 min-w-0 px-3 md:pl-4 bg-gray-900 absolute z-10 bottom-0",
+          "w-[40%] transition-all duration-300 h-fit m-auto shadow-lg   divide-zinc-600 min-h-16 shadow-black/40 rounded-[24px] overflow-hidden flex items-center flex-1  px-3 md:pl-4 bg-gray-900 z-10 ",
           {
             "animate-wiggle": showAnim,
           }
         )}
       >
-        <div className="relative w-full flex items-center transition-all duration-300 min-h-full h-fit">
-          <label htmlFor="textarea-input" className="sr-only">
+        <div className=" w-full flex items-center transition-all duration-300 min-h-full h-fit">
+          {/* <label htmlFor="textarea-input" className="sr-only">
             Prompt
-          </label>
-          <div className="relative flex flex-1 min-w-0 self-start">
-            <div className="flex-[1_0_50%] min-w-[50%] overflow-x-visible -ml-[100%] opacity-0 invisible pointer-events-none">
-              <div className="[&amp;_textarea]:px-0 opacity-0 invisible pointer-events-none">
-                A "report an issue" modal
-              </div>
-            </div>
-            <textarea
-              id="home-prompt"
-              maxLength={1000}
-              ref={inputRef}
-              className="flex-[1_0_50%] min-w-[50%] disabled:opacity-80 text-white text-sm bg-transparent border-0 shadow-none resize-none outline-none ring-0 disabled:bg-transparent selection:bg-indigo-300 selection:text-black placeholder:text-zinc-400 [scroll-padding-block:0.75rem] pr-2 leading-relaxed py-3 pl-1 [&amp;_textarea]:px-0"
-              spellCheck="false"
-              rows={1}
-              placeholder="enter demand ideas"
-              style={{
-                resize: "none",
-                colorScheme: "dark",
-                overflow: "auto",
-              }}
-              value={initCreateText}
-              onChange={(e) => {
-                setInitCreateText(e.target.value);
-              }}
-            ></textarea>
-          </div>
+          </label> */}
+          <textarea
+            id="home-prompt"
+            maxLength={5000}
+            ref={inputRef}
+            className="w-[90%] flex flex-1 min-h-full h-fit self-start disabled:opacity-90 text-white text-sm bg-transparent border-0 shadow-none resize-none outline-none ring-0 disabled:bg-transparent selection:bg-indigo-300 selection:text-black placeholder:text-zinc-400 [scroll-padding-block:0.75rem] pr-2 leading-relaxed py-3 pl-1 [&amp;_textarea]:px-0"
+            spellCheck="false"
+            rows={1}
+            placeholder="Enter demand ideas"
+            style={{
+              resize: "none",
+              colorScheme: "dark",
+              overflow: "auto",
+            }}
+            value={initCreateText}
+            onChange={(e) => {
+              setInitCreateText(e.target.value);
+            }}
+          ></textarea>
           <div className="flex items-center">
             {/* <button
               className="shrink-0 text-m font-medium transition-colors focus-visible:outline-none focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-transparent text-white hover:bg-gray-800 flex items-center justify-center focus-visible:ring-0 focus-visible:bg-gray-800 rounded-full w-[28px] h-[28px] text-[19px]"
@@ -177,7 +169,7 @@ export default function ChatInput({ openWhiteboard, showAnim }: props) {
           </div>
         </div>
       </div>
-      <div className="absolute flex flex-wrap items-center justify-center max-w-full gap-2 px-4 mx-auto mt-6 text-sm top-full whitespace-nowrap">
+      <div className="flex flex-wrap items-center justify-center max-w-full gap-2 px-4 mx-auto mt-6 text-sm top-full whitespace-nowrap">
         {shortcutIdeas.map((shortcut) => {
           return (
             <button

@@ -112,15 +112,14 @@ export default function Dashboard() {
                         <span className='relative text-white'>ideas</span>
                     </div>
                 </div> */}
-        <div className="w-full bg-white dark:bg-gray-800 border-t dark:border-t-gray-600 flex-col flex items-center justify-between p-3 mb-10">
-          <div className="flex relative flex-col w-full items-center px-6">
-            <ChatInput
-              openWhiteboard={() => {
-                setOpenWhiteboard(true);
-              }}
-              showAnim={showAnim}
-            />
-          </div>
+        <div className="w-full bg-white dark:bg-gray-800 border-t dark:border-t-gray-600 flex-col flex items-center justify-between p-3 ">
+          {/* <div className="flex flex-col w-full items-center px-6"></div> */}
+          <ChatInput
+            openWhiteboard={() => {
+              setOpenWhiteboard(true);
+            }}
+            showAnim={showAnim}
+          />
           {/* className={classNames(
                         "fixed w-full h-full top-0 left-0 z-50",
                         {
