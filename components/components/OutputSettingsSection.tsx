@@ -41,8 +41,8 @@ function generateDisplayComponent(config: GeneratedCodeConfig) {
     case GeneratedCodeConfig.REACT_ANTD:
       return (
         <div>
-          <span className="font-semibold">react</span> +{" "}
-          <span className="font-semibold">antd</span>
+          <span className="font-semibold">React</span> +{" "}
+          <span className="font-semibold">Antd</span>
         </div>
       );
     case GeneratedCodeConfig.VUE_TAILWIND:
@@ -55,9 +55,8 @@ function generateDisplayComponent(config: GeneratedCodeConfig) {
     case GeneratedCodeConfig.VUE_ELEMENT:
       return (
         <div>
-          <span className="font-semibold">vue</span> +{" "}
-          <span className="font-semibold">element plus</span>
-          <span className="text-orange-600 ml-[20px]">Beta</span>
+          <span className="font-semibold">Vue</span> +{" "}
+          <span className="font-semibold">Element</span>
         </div>
       );
     case GeneratedCodeConfig.BOOTSTRAP:
@@ -109,9 +108,9 @@ function OutputSettingsSection({
               {/* <SelectItem value={GeneratedCodeConfig.HTML_TAILWIND}>
                 {generateDisplayComponent(GeneratedCodeConfig.HTML_TAILWIND)}
               </SelectItem> */}
-              <SelectItem value={GeneratedCodeConfig.REACT_TAILWIND}>
+              {/* <SelectItem value={GeneratedCodeConfig.REACT_TAILWIND}>
                 {generateDisplayComponent(GeneratedCodeConfig.REACT_TAILWIND)}
-              </SelectItem>
+              </SelectItem> */}
               {/* <SelectItem value={GeneratedCodeConfig.REACT_SHADCN_UI}>
                 {generateDisplayComponent(GeneratedCodeConfig.REACT_SHADCN_UI)}
               </SelectItem> */}
@@ -124,9 +123,9 @@ function OutputSettingsSection({
               <SelectItem value={GeneratedCodeConfig.VUE_TAILWIND}>
                 {generateDisplayComponent(GeneratedCodeConfig.VUE_TAILWIND)}
               </SelectItem> */}
-              {/* <SelectItem value={GeneratedCodeConfig.VUE_ELEMENT}>
+              <SelectItem value={GeneratedCodeConfig.VUE_ELEMENT}>
                 {generateDisplayComponent(GeneratedCodeConfig.VUE_ELEMENT)}
-              </SelectItem> */}
+              </SelectItem>
               {/* <SelectItem value={GeneratedCodeConfig.BOOTSTRAP}>
                 {generateDisplayComponent(GeneratedCodeConfig.BOOTSTRAP)}
               </SelectItem> */}
@@ -159,10 +158,10 @@ export const TechnologyStackList = [
   //   label: GeneratedCodeConfig.HTML_TAILWIND,
   //   value: "HTML + tailwind",
   // },
-  {
-    label: GeneratedCodeConfig.REACT_TAILWIND,
-    value: "react + tailwind",
-  },
+  // {
+  //   label: GeneratedCodeConfig.REACT_TAILWIND,
+  //   value: "react + tailwind",
+  // },
   // {
   //   label: GeneratedCodeConfig.REACT_SHADCN_UI,
   //   value: "react + shadcn/ui",
@@ -175,10 +174,10 @@ export const TechnologyStackList = [
   //   label: GeneratedCodeConfig.VUE_TAILWIND,
   //   value: "vue + tailwind",
   // },
-  // {
-  //   label: GeneratedCodeConfig.VUE_ELEMENT,
-  //   value: "vue + element",
-  // },
+  {
+    label: GeneratedCodeConfig.VUE_ELEMENT,
+    value: "vue + element",
+  },
   // {
   //   label: GeneratedCodeConfig.REACT_NATIVE,
   //   value: "react + native",

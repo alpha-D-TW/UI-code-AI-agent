@@ -22,7 +22,7 @@ const initialValue = {
     screenshotOneApiKey: null,
     isImageGenerationEnabled: true,
     editorTheme: EditorTheme.COBALT,
-    generatedCodeConfig: GeneratedCodeConfig.HTML_TAILWIND,
+    generatedCodeConfig: GeneratedCodeConfig.REACT_ANTD,
     // Only relevant for hosted version
     isTermOfServiceAccepted: false,
     accessCode: null,
