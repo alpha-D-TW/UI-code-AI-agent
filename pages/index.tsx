@@ -164,7 +164,7 @@ export default function Dashboard() {
                   onClick={() => {
                     setSettings({
                       ...settings,
-                      generatedCodeConfig: GeneratedCodeConfig.HTML_TAILWIND,
+                      generatedCodeConfig: GeneratedCodeConfig.REACT_ANTD,
                     });
                     router.push(`/editor/${template.id}`);
                   }}

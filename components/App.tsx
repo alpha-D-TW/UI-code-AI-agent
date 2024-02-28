@@ -173,7 +173,7 @@ function App() {
     if (!settings.generatedCodeConfig) {
       setSettings({
         ...settings,
-        generatedCodeConfig: GeneratedCodeConfig.HTML_TAILWIND,
+        generatedCodeConfig: GeneratedCodeConfig.REACT_ANTD,
       });
     }
   }, [settings.generatedCodeConfig, setSettings]);
