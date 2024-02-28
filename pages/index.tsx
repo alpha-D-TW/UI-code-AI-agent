@@ -41,6 +41,7 @@ const rejectStyle = {
 };
 
 export default function Dashboard() {
+  const [ tab, setTab] = useState("Templates");
   const { settings, setSettings, setInitCreate } = useContext(SettingContext);
   const {
     getRootProps,
@@ -145,7 +146,8 @@ export default function Dashboard() {
                 } */}
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 ">
           <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
-            <h1 className="text-2xl font-bold">Templates</h1>
+            <h1 className={tab === "Templates" ? "text-2xl font-bold" : "text-2xl"} onClick={() => setTab("Templates")}>Templates</h1>
+            <h1 className={tab === "History" ? "text-2xl font-bold" : "text-2xl"} onClick={() => setTab("History")}>History</h1>
             {/* <nav className="hidden md:flex space-x-10">
                             <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">
                             Prompts
@@ -154,6 +156,7 @@ export default function Dashboard() {
           </div>
 
           <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+<<<<<<< HEAD
 <<<<<<< HEAD
             {templates.list.map((template) => {
               return (
@@ -206,6 +209,22 @@ export default function Dashboard() {
               settings={settings}
               setSettings={setSettings}
             />
+=======
+            {
+              tab === "Templates" &&
+              <>
+                <TemplateBoxes></TemplateBoxes>
+                <TemplatePanel
+                  key={"TemplatePanel"}
+                  settings={settings}
+                  setSettings={setSettings}
+                />
+              </>
+            }
+            {
+              tab === "History" && <div>There should show History boxes</div>
+            }
+>>>>>>> e55b15e ([liujia]feature: add history tab)
           </div>
         </div>
         {/* <div className="mt-[50px] w-[100%] p-2">
