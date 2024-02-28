@@ -103,8 +103,12 @@ function SettingsDialog({
                 <RadioGroupItem value="openai" id="openai-llm" />
               </Label>
               <Label className="flex item-center" htmlFor="gemini-llm">
-                <span className="mr-2">moonshoot</span>
-                <RadioGroupItem value="gemini" id="gemini-llm" />
+                <span className="mr-2">moonshot</span>
+                <RadioGroupItem value="moonshot" id="moonshot-llm" />
+              </Label>
+              <Label className="flex item-center" htmlFor="gemini-llm">
+                <span className="mr-2">baichuan</span>
+                <RadioGroupItem value="baichuan" id="baichuan-llm" />
               </Label>
             </RadioGroup>
           </div>
@@ -153,14 +157,14 @@ function SettingsDialog({
                 }
               />
             </>
-          ) : (
+          ) : settings.llm === "moonshot" ? (
             <>
               {/* <p className="text-rose-500">
                 The output effect is not good and it will not be maintained for
                 the time being.
               </p> */}
               <Label htmlFor="openai-api-key">
-                <div>Moonshoot API key</div>
+                <div>Moonshot API key</div>
                 <div className="font-light mt-2 leading-relaxed">
                   Only stored in your browser. Never stored on servers.
                   Overrides your .env config.
@@ -168,17 +172,41 @@ function SettingsDialog({
               </Label>
 
               <Input
-                id="Gemini-api-key"
-                placeholder="Moonshoot API key"
-                value={settings?.geminiApiKey || ""}
+                id="moonshot-api-key"
+                placeholder="Moonshot API key"
+                value={settings?.moonshotApiKey || ""}
                 onChange={(e) =>
                   setSettings({
                     ...settings,
-                    geminiApiKey: e.target.value,
+                    moonshotApiKey: e.target.value,
                   })
                 }
               />
             </>
+          ) : (
+            (
+              <>
+                <Label htmlFor="openai-api-key">
+                  <div>Baichuan API key</div>
+                  <div className="font-light mt-2 leading-relaxed">
+                    Only stored in your browser. Never stored on servers.
+                    Overrides your .env config.
+                  </div>
+                </Label>
+  
+                <Input
+                  id="baichuan-api-key"
+                  placeholder="Baichuan API key"
+                  value={settings?.baichuanApiKey || ""}
+                  onChange={(e) =>
+                    setSettings({
+                      ...settings,
+                      baichuanApiKey: e.target.value,
+                    })
+                  }
+                />
+              </>
+            )
           )}
         </div>
         {process.env.NEXT_PUBLIC_SHOW_MOCK === "true" && (

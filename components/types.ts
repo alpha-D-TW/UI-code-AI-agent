@@ -31,7 +31,8 @@ export interface Settings {
   promptCode: string;
   init: boolean;
   llm: string;
-  geminiApiKey: string;
+  moonshotApiKey: string;
+  baichuanApikey: string;
   themeConfig: ThemeCodeConfig;
 }
 

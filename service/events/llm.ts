@@ -74,51 +74,6 @@ const safetySettings = [
     threshold: HarmBlockThreshold.BLOCK_NONE,
   },
 ];
-async function useGeminiResponse([messages, callback, params]: Parameters<
-  typeof streamingOpenAIResponses
->) {
-  let genAI = new GoogleGenerativeAI(
-    params.geminiApiKey || process.env["GEMINI_API_KEY"]
-  );
-  const generationConfig = {
-    temperature: 0,
-    topK: 32,
-    topP: 1,
-    maxOutputTokens: 30000, //
-  };
-
-  const contents = transformData(messages);
-  const parts = contents[0].parts;
-  let modelType = "gemini-pro";
-  if (parts && parts[1] && parts[1].inlineData) {
-    modelType = "gemini-pro-vision";
-  }
-
-  const model = genAI.getGenerativeModel({ model: modelType });
-
-  const result = await model.generateContentStream({
-    contents: contents,
-    generationConfig,
-    safetySettings,
-  });
-
-  let text = "";
-  let perText = "";
-  for await (const chunk of result.stream) {
-    if (perText) {
-      callback(perText);
-      text += perText;
-    }
-    const chunkText = text
-      ? chunk.text()
-      : chunk.text().replace(/^\s*```html/g, "");
-    perText = chunkText;
-  }
-  perText = perText.replace(/```\s*$/g, "");
-  callback(perText);
-  text += perText;
-  return text;
-}
 
 export async function streamingOpenAIResponses(
   messages: any,
@@ -130,17 +85,18 @@ export async function streamingOpenAIResponses(
     openAiApiKey: any;
     openAiBaseURL: any;
     llm: string;
-    geminiApiKey: any;
+    moonshotApiKey: any;
+    baichuanApikey: any;
   }
 ) {
-  if (params.llm === "gemini") {
-    console.log("start use moonshot");
-    if (!params.geminiApiKey) {
+  if (params.llm === "moonshot") {
+    console.log("start use moonshot",'message', messages);
+    if (!params.moonshotApiKey) {
       callback("No Moonshot key, set it", "error");
       return "";
     }
     const openai = new OpenAI({
-      apiKey: params.geminiApiKey || process.env["OPENAI_API_KEY"], // defaults to process.env["OPENAI_API_KEY"]
+      apiKey: params.moonshotApiKey,
       baseURL: "https://api.moonshot.cn/v1",
     });
 
@@ -151,7 +107,6 @@ export async function streamingOpenAIResponses(
       messages,
       stream: true,
     });
-    console.log("end use moonshot");
     let full_response = "";
     for await (const chunk of stream) {
       const content = chunk.choices[0]?.delta?.content || "";
@@ -160,33 +115,63 @@ export async function streamingOpenAIResponses(
     }
 
     return full_response;
+  } else if (params.llm === 'baichuan') {
+    console.log("start use baichuan", 'message', messages);
+    
+    if (!params.baichuanApikey) {
+      callback("No Baichuan key, set it", "error");
+      return "";
+    }
+    const openai = new OpenAI({
+      apiKey: params.baichuanApikey,
+      baseURL: "https://api.baichuan-ai.com/v1",
+    });
+
+    const stream = await openai.chat.completions.create({
+      model: "Baichuan2-Turbo",
+      temperature: 0,
+      max_tokens: 4096,
+      messages,
+      stream: true,
+    });
+
+    let full_response = "";
+    for await (const chunk of stream) {
+      const content = chunk.choices[0]?.delta?.content || "";
+      full_response += content;
+      callback(content);
+    }
+
+    return full_response;
+  } else {
+    if (!params.openAiApiKey) {
+      callback("No openai key, set it", "error");
+      return "";
+    }
+    const openai = new OpenAI({
+      apiKey: params.openAiApiKey || process.env["OPENAI_API_KEY"], // defaults to process.env["OPENAI_API_KEY"]
+      baseURL:
+        params.openAiBaseURL ||
+        process.env["OPENAI_BASE_URL"] ||
+        "https://api.openai.com/v1",
+    });
+  
+    const stream = await openai.chat.completions.create({
+      model: "gpt-4-vision-preview",
+      temperature: 0,
+      max_tokens: 4096,
+      messages,
+      stream: true,
+    });
+    let full_response = "";
+    for await (const chunk of stream) {
+      const content = chunk.choices[0]?.delta?.content || "";
+      full_response += content;
+      callback(content);
+    }
+  
+    return full_response;
   }
 
-  if (!params.openAiApiKey) {
-    callback("No openai key, set it", "error");
-    return "";
-  }
-  const openai = new OpenAI({
-    apiKey: params.openAiApiKey || process.env["OPENAI_API_KEY"], // defaults to process.env["OPENAI_API_KEY"]
-    baseURL:
-      params.openAiBaseURL ||
-      process.env["OPENAI_BASE_URL"] ||
-      "https://api.openai.com/v1",
-  });
-
-  const stream = await openai.chat.completions.create({
-    model: "gpt-4-vision-preview",
-    temperature: 0,
-    max_tokens: 4096,
-    messages,
-    stream: true,
-  });
-  let full_response = "";
-  for await (const chunk of stream) {
-    const content = chunk.choices[0]?.delta?.content || "";
-    full_response += content;
-    callback(content);
-  }
-
-  return full_response;
+  
 }

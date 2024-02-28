@@ -19,7 +19,8 @@ export interface IGenerateCodeParams {
   history: any[];
   mockAiResponse?: boolean;
   llm: string;
-  geminiApiKey: string;
+  moonshotApiKey: string;
+  baichuanApiKey: string;
   slug?: string;
   themeConfig: string;
 }
@@ -125,7 +126,8 @@ export async function streamGenerateCode(
           openAiApiKey: params.openAiApiKey,
           openAiBaseURL: params.openAiBaseURL,
           llm: params.llm, // 'Gemini'
-          geminiApiKey: params.geminiApiKey,
+          moonshotApiKey: params.moonshotApiKey,
+          baichuanApikey: params.baichuanApiKey,
         }
       );
     } catch (e) {
