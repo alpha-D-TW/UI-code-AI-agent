@@ -428,7 +428,7 @@ function App() {
 
   return (
     <div className="dark:bg-black dark:text-white h-full">
-      <div className="fixed inset-y-0 z-40 flex w-[200px] flex-col">
+      <div className="fixed inset-y-0 z-40 flex w-[300px] flex-col">
         <div className="flex grow flex-col gap-y-2 overflow-y-auto border-r border-gray-200 bg-white px-4 py-4 dark:bg-zinc-950 dark:text-white">
           {(appState === AppState.CODING ||
             appState === AppState.CODE_READY) && (
@@ -477,23 +477,21 @@ function App() {
 
               {/* Reference image display */}
               <div className="flex flex-col mt-2">
-                <div className="flex flex-col">
+                <div className="flex flex-col ">
                   <h1 className="font-bold mb-2 mt-4">Original Info</h1>
-                  <div>
-                    {referenceText ? (
-                      <div className="border p-1 border-slate-200 w-full rounded bg-[#ebebeb]">
-                        <p className="text-sm">{referenceText}</p>
-                      </div>
-                    ) : referenceImages[0] || template.imageUrl ? (
-                      <img
-                        className="w-[340px] border border-gray-200 rounded-md"
-                        src={referenceImages[0] || template.imageUrl}
-                        alt="Reference"
-                      />
-                    ) : (
-                      <></>
-                    )}
-                  </div>
+                  {referenceText ? (
+                    <div className="border p-1 border-slate-200 w-full rounded bg-[#ebebeb] max-h-80 overflow-y-scroll">
+                      <p className="text-sm">{referenceText}</p>
+                    </div>
+                  ) : referenceImages[0] || template.imageUrl ? (
+                    <img
+                      className="w-[340px] border border-gray-200 rounded-md"
+                      src={referenceImages[0] || template.imageUrl}
+                      alt="Reference"
+                    />
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <div className="bg-gray-400 px-4 py-2 rounded text-sm hidden">
                   <h2 className="text-lg mb-4 border-b border-gray-800">
@@ -526,8 +524,8 @@ function App() {
           }
         </div>
       </div>
-      <main className="pl-[200px] relative h-full flex flex-col pb-10">
-        <div className="w-[90%] ml-[5%] flex-1 mt-4">
+      <main className="pl-[300px] relative h-full flex flex-col pb-10">
+        <div className="w-[96%] ml-[2%] flex-1 mt-4">
           <div className="flex absolute gap-2">
             {appState === AppState.CODE_READY && (
               <>

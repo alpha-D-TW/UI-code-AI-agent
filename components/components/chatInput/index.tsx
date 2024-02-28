@@ -71,13 +71,13 @@ export default function ChatInput({ openWhiteboard, showAnim }: props) {
     <div className=" w-full flex flex-col mt-60 mb-12 justify-center items-center ">
       <div
         className={classNames(
-          "w-[40%] transition-all duration-300 h-fit m-auto shadow-lg   divide-zinc-600 min-h-16 shadow-black/40 rounded-[24px] overflow-hidden flex items-center flex-1  px-3 md:pl-4 bg-gray-900 z-10 ",
+          "w-[40%] transition-all duration-300  m-auto shadow-lg divide-zinc-600 min-h-16 shadow-black/40 rounded-[24px] overflow-auto flex items-center flex-1  px-3 md:pl-4 bg-gray-900 z-10 ",
           {
             "animate-wiggle": showAnim,
           }
         )}
       >
-        <div className=" w-full flex items-center transition-all duration-300 min-h-full h-fit">
+        <div className=" w-full flex items-center transition-all duration-300 min-h-full h-fit relative">
           {/* <label htmlFor="textarea-input" className="sr-only">
             Prompt
           </label> */}
@@ -85,7 +85,7 @@ export default function ChatInput({ openWhiteboard, showAnim }: props) {
             id="home-prompt"
             maxLength={5000}
             ref={inputRef}
-            className="w-[90%] flex flex-1 min-h-full h-fit self-start disabled:opacity-90 text-white text-sm bg-transparent border-0 shadow-none resize-none outline-none ring-0 disabled:bg-transparent selection:bg-indigo-300 selection:text-black placeholder:text-zinc-400 [scroll-padding-block:0.75rem] pr-2 leading-relaxed py-3 pl-1 [&amp;_textarea]:px-0"
+            className="w-full flex flex-1 min-h-full max-h-96 h-fit self-start disabled:opacity-90 text-white overflow-y-scroll text-sm bg-transparent border-0 shadow-none resize-none outline-none ring-0 disabled:bg-transparent selection:bg-indigo-300 selection:text-black placeholder:text-zinc-400 [scroll-padding-block:0.75rem] pr-2 leading-relaxed py-3 pl-1 [&amp;_textarea]:px-0"
             spellCheck="false"
             rows={1}
             placeholder="Enter demand ideas"
@@ -99,7 +99,7 @@ export default function ChatInput({ openWhiteboard, showAnim }: props) {
               setInitCreateText(e.target.value);
             }}
           ></textarea>
-          <div className="flex items-center">
+          <div className="flex items-center absolute right-3">
             {/* <button
               className="shrink-0 text-m font-medium transition-colors focus-visible:outline-none focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-transparent text-white hover:bg-gray-800 flex items-center justify-center focus-visible:ring-0 focus-visible:bg-gray-800 rounded-full w-[28px] h-[28px] text-[19px]"
               id="send-button"
