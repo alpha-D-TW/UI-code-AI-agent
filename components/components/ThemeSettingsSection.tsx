@@ -53,7 +53,7 @@ function ThemeSettingsSection({
               {
                 CompanyThemeList.filter((item) => {
                   return item.label === generatedThemeConfig ? item : "";
-                })[0].value
+                })[0]?.value
               }
             </span>
           </SelectTrigger>
@@ -61,7 +61,7 @@ function ThemeSettingsSection({
             <SelectGroup>
               {CompanyThemeList.map((item) => {
                 return (
-                  <SelectItem value={item.label}>
+                  <SelectItem value={item.label} key={item.label}>
                     <span className="font-semibold">{item.value}</span>
                   </SelectItem>
                 );
