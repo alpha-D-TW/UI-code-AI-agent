@@ -102,10 +102,10 @@ function SettingsDialog({
                 <span className="mr-2">OpenAI</span>
                 <RadioGroupItem value="openai" id="openai-llm" />
               </Label>
-              {/* <Label className="flex item-center" htmlFor="gemini-llm">
-                <span className="mr-2">Gemini</span>
+              <Label className="flex item-center" htmlFor="gemini-llm">
+                <span className="mr-2">moonshoot</span>
                 <RadioGroupItem value="gemini" id="gemini-llm" />
-              </Label> */}
+              </Label>
             </RadioGroup>
           </div>
           {settings.llm === "openai" ? (
@@ -155,12 +155,12 @@ function SettingsDialog({
             </>
           ) : (
             <>
-              <p className="text-rose-500">
+              {/* <p className="text-rose-500">
                 The output effect is not good and it will not be maintained for
                 the time being.
-              </p>
+              </p> */}
               <Label htmlFor="openai-api-key">
-                <div>Gemini API key</div>
+                <div>Moonshoot API key</div>
                 <div className="font-light mt-2 leading-relaxed">
                   Only stored in your browser. Never stored on servers.
                   Overrides your .env config.
@@ -169,7 +169,7 @@ function SettingsDialog({
 
               <Input
                 id="Gemini-api-key"
-                placeholder="Gemini API key"
+                placeholder="Moonshoot API key"
                 value={settings?.geminiApiKey || ""}
                 onChange={(e) =>
                   setSettings({

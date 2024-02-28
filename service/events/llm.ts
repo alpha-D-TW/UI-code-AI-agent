@@ -1,5 +1,4 @@
-import OpenAI from 'openai';
-
+import OpenAI from "openai";
 
 import {
   GoogleGenerativeAI,
@@ -90,12 +89,12 @@ async function useGeminiResponse([messages, callback, params]: Parameters<
 
   const contents = transformData(messages);
   const parts = contents[0].parts;
-  let modelType = 'gemini-pro'
+  let modelType = "gemini-pro";
   if (parts && parts[1] && parts[1].inlineData) {
-    modelType = "gemini-pro-vision"
+    modelType = "gemini-pro-vision";
   }
 
-  const model = genAI.getGenerativeModel({ model:  modelType});
+  const model = genAI.getGenerativeModel({ model: modelType });
 
   const result = await model.generateContentStream({
     contents: contents,
@@ -121,7 +120,6 @@ async function useGeminiResponse([messages, callback, params]: Parameters<
   return text;
 }
 
-
 export async function streamingOpenAIResponses(
   messages: any,
   callback: {
@@ -135,34 +133,57 @@ export async function streamingOpenAIResponses(
     geminiApiKey: any;
   }
 ) {
-
   if (params.llm === "gemini") {
-    const full_response = await useGeminiResponse([messages, callback, params]);
+    console.log("start use moonshot");
+    if (!params.geminiApiKey) {
+      callback("No Moonshot key, set it", "error");
+      return "";
+    }
+    const openai = new OpenAI({
+      apiKey: params.geminiApiKey || process.env["OPENAI_API_KEY"], // defaults to process.env["OPENAI_API_KEY"]
+      baseURL: "https://api.moonshot.cn/v1",
+    });
+
+    const stream = await openai.chat.completions.create({
+      model: "moonshot-v1-8k",
+      temperature: 0,
+      max_tokens: 4096,
+      messages,
+      stream: true,
+    });
+    console.log("end use moonshot");
+    let full_response = "";
+    for await (const chunk of stream) {
+      const content = chunk.choices[0]?.delta?.content || "";
+      full_response += content;
+      callback(content);
+    }
+
     return full_response;
   }
 
   if (!params.openAiApiKey) {
-    callback('No openai key, set it', 'error');
-    return '';
+    callback("No openai key, set it", "error");
+    return "";
   }
   const openai = new OpenAI({
-    apiKey: params.openAiApiKey || process.env['OPENAI_API_KEY'], // defaults to process.env["OPENAI_API_KEY"]
+    apiKey: params.openAiApiKey || process.env["OPENAI_API_KEY"], // defaults to process.env["OPENAI_API_KEY"]
     baseURL:
       params.openAiBaseURL ||
-      process.env['OPENAI_BASE_URL'] ||
-      'https://api.openai.com/v1',
+      process.env["OPENAI_BASE_URL"] ||
+      "https://api.openai.com/v1",
   });
 
   const stream = await openai.chat.completions.create({
-    model: 'gpt-4-vision-preview',
+    model: "gpt-4-vision-preview",
     temperature: 0,
     max_tokens: 4096,
     messages,
     stream: true,
   });
-  let full_response = '';
+  let full_response = "";
   for await (const chunk of stream) {
-    const content = chunk.choices[0]?.delta?.content || '';
+    const content = chunk.choices[0]?.delta?.content || "";
     full_response += content;
     callback(content);
   }
