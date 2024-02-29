@@ -63,7 +63,7 @@ export default function ChatInput({ openWhiteboard, showAnim }: props) {
             className="w-full flex flex-1 min-h-full max-h-96 h-fit self-start disabled:opacity-90 text-white overflow-y-scroll text-sm bg-transparent border-0 shadow-none resize-none outline-none ring-0 disabled:bg-transparent selection:bg-indigo-300 selection:text-black placeholder:text-zinc-400 [scroll-padding-block:0.75rem] pr-2 leading-relaxed py-3 pl-1 [&amp;_textarea]:px-0"
             spellCheck="false"
             rows={1}
-            placeholder="Enter demand ideas"
+            placeholder="Enter Detailed demand ideas"
             style={{
               resize: "none",
               colorScheme: "dark",
