@@ -1,6 +1,7 @@
-import { assemblePrompt } from "./prompts";
+import { DSLPrompt, assemblePrompt } from "./prompts";
 import { streamingOpenAIResponses } from "./llm";
 import { mockComletion } from "./mock";
+import { useLLM } from "./usellm";
 
 export interface IGenerateCodeParams {
   generationType: string;
@@ -25,17 +26,25 @@ export interface IGenerateCodeParams {
   themeConfig: string;
 }
 
+export function noticeHost(
+  socket: { enqueue: (v: any) => any },
+  data: Record<any, any>
+) {
+  if (socket.enqueue) {
+    socket.enqueue(encoder.encode(`${JSON.stringify(data)}\n`));
+  }
+}
+
 const encoder = new TextEncoder();
 export async function streamGenerateCode(
   params: IGenerateCodeParams,
-  socket: { enqueue: (v: any) => any },
-  origin?: string
+  socket: { enqueue: (v: any) => any }
 ) {
-  function noticeHost(data: Record<any, any>) {
-    if (socket.enqueue) {
-      socket.enqueue(encoder.encode(`${JSON.stringify(data)}\n`));
-    }
-  }
+  // 基于LLM生成DSL
+  const dsl_prompt_messages = await DSLPrompt(params["text"]);
+  const generatedDSL = await useLLM(params, dsl_prompt_messages, socket);
+
+  // 基于LLM生成Code
   const generated_code_config = params["generatedCodeConfig"];
   let prompt_messages;
   const history = params["history"];
@@ -69,7 +78,7 @@ export async function streamGenerateCode(
     }
   } catch (e) {
     console.log(e);
-    noticeHost({
+    noticeHost(socket, {
       type: "error",
       value: "Prompt error!",
     });
@@ -96,54 +105,24 @@ export async function streamGenerateCode(
 
   let completion;
   const SHOULD_MOCK_AI_RESPONSE = params["mockAiResponse"];
+
   //test: params['generationType'] === 'create'
   if (SHOULD_MOCK_AI_RESPONSE) {
     completion = await mockComletion((content: any) => {
-      noticeHost({
+      noticeHost(socket, {
         type: "chunk",
         value: content,
       });
     });
   } else {
-    try {
-      // 调用大模型
-      completion = await streamingOpenAIResponses(
-        prompt_messages,
-        (content: string, event?: string) => {
-          if (event === "error") {
-            noticeHost({
-              type: "error",
-              value: content,
-            });
-          } else {
-            noticeHost({
-              type: "chunk",
-              value: content,
-            });
-          }
-        },
-        {
-          openAiApiKey: params.openAiApiKey,
-          openAiBaseURL: params.openAiBaseURL,
-          llm: params.llm, // 'Gemini'
-          moonshotApiKey: params.moonshotApiKey,
-          baichuanApikey: params.baichuanApiKey,
-        }
-      );
-    } catch (e) {
-      console.log(e);
-      noticeHost({
-        type: "error",
-        value: "openAI request error!",
-      });
-    }
+    completion = await useLLM(params, prompt_messages, socket);
   }
   const updated_html = completion;
-  noticeHost({
+  noticeHost(socket, {
     type: "setCode",
     value: updated_html,
   });
-  noticeHost({
+  noticeHost(socket, {
     type: "status",
     value: "Code generation complete.",
   });
