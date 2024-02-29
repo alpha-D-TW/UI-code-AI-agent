@@ -116,13 +116,48 @@ export const shortcutIdeas = [
     value: `生成一个保险产品列表页面`,
   },
   {
-    id: "insurance_product_detail",
-    label: "Insurance product detail",
-    value: `生成一个保险产品详情页面`,
+    id: "car_insurance_online_calculator",
+    label: "Car Insurance Online Calculator",
+    value: `生成一个车险在线计算器页面`,
   },
   {
-    id: "insurance_price_calculate",
-    label: "Insurance Price Calculate",
-    value: `生成一个保险投保页面`,
+    id: "insurance_claim_information_inquiry",
+    label: "Insurance claim information inquiry",
+    value: `生成一个保险理赔信息查询页面`,
+  },
+  {
+    id: "overseas_study_accident_insurance_details",
+    label: "Overseas study accident insurance details",
+    value: `生成一个境外留学意外伤害保险详情页面`,
+  },
+  {
+    id: "food_safety_liability_insurance_details",
+    label: "Food safety liability insurance details",
+    value: `生成一个食品安全责任险详情页面`,
+  },
+  {
+    id: "hospital_insurance_premium_calculation",
+    label: "Hospital insurance premium calculation",
+    value: `生成一个住院保险投保页面`,
+  },
+  {
+    id: "plateau_travel_insurance_premium_calculation",
+    label: "Plateau travel insurance premium calculation",
+    value: `生成一个高原旅游险投保页面`,
+  },
+  {
+    id: "employers_liability_insurance_premium_calculation",
+    label: "Employers liability insurance premium calculation",
+    value: `生成一个雇主责任险投保页面`,
+  },
+  {
+    id: "adult_accident_insurance_premium_calculation",
+    label: "Adult accident insurance premium calculation",
+    value: `生成一个成人意外险投保页面`,
+  },
+  {
+    id: "pet_care_insurance_premium_calculation",
+    label: "Pet care insurance premium calculation",
+    value: `生成一个宠物养护险投保页面`,
   },
 ];
