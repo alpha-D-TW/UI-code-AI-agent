@@ -1,17 +1,14 @@
 import { useState, useRef, useContext, useMemo, useEffect } from "react";
 import Header from "../components/components/Header";
 import ChatInput from "../components/components/chatInput";
-import OnboardingNote from "../components/components/OnboardingNote";
 import { SettingContext } from "../components/contexts/SettingContext";
 import { UploadFileContext } from "../components/contexts/UploadFileContext";
-import { IS_RUNNING_ON_CLOUD } from "../components/config";
 import { useRouter } from "next/router";
 import classNames from "classnames";
-import templates from "../templates/templates";
-import { FaGithubSquare } from "react-icons/fa";
+import TemplateBoxes from "@/components/components/TemplateBoxes";
+import HistoryBoxes from "@/components/components/HistoryBoxes";
 
 import dynamic from "next/dynamic";
-import { GeneratedCodeConfig } from "@/components/types";
 import TemplatePanel from "@/components/components/TemplatePanel";
 
 const Whiteboard = dynamic(
@@ -45,6 +42,7 @@ const rejectStyle = {
 };
 
 export default function Dashboard() {
+  const [ tab, setTab] = useState("Templates");
   const { settings, setSettings, setInitCreate } = useContext(SettingContext);
   const {
     getRootProps,
@@ -149,63 +147,29 @@ export default function Dashboard() {
                 } */}
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 ">
           <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
-            <h1 className="text-2xl font-bold">Templates</h1>
+            <h1 className={tab === "Templates" ? "text-2xl font-bold" : "text-2xl"} onClick={() => setTab("Templates")}>Templates</h1>
+            <h1 className={tab === "History" ? "text-2xl font-bold" : "text-2xl"} onClick={() => setTab("History")}>History</h1>
             {/* <nav className="hidden md:flex space-x-10">
                             <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">
                             Prompts
                             </a>
                         </nav> */}
           </div>
-
           <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            {templates.list.map((template) => {
-              return (
-                <div
-                  onClick={() => {
-                    setSettings({
-                      ...settings,
-                      generatedCodeConfig: GeneratedCodeConfig.REACT_ANTD,
-                    });
-                    router.push(`/editor/${template.id}`);
-                  }}
-                  key={template.id}
-                  className="bg-white shadow-lg rounded-lg p-4 flex flex-col hover:ring ring-black relative border"
-                >
-                  <div className="flex-1">
-                    <div className="aspect-[1376/768]">
-                      <img
-                        className="w-full"
-                        src={template.imageUrl}
-                        alt={template.title}
-                      />
-                    </div>
-                    <h3 className="mt-4 text-sm text-gray-700">
-                      {template.title}
-                    </h3>
-                    <p className="mt-1 text-lg font-medium text-gray-900">
-                      {template.description}
-                    </p>
-                  </div>
-                  {template.fromUrl && (
-                    <a
-                      onClick={(e) => {
-                        e.stopPropagation();
-                      }}
-                      className="absolute right-2 top-2"
-                      href={template.fromUrl}
-                      target="_blank"
-                    >
-                      <FaGithubSquare className="text-xl" />
-                    </a>
-                  )}
-                </div>
-              );
-            })}
-            <TemplatePanel
-              key={"TemplatePanel"}
-              settings={settings}
-              setSettings={setSettings}
-            />
+            {
+              tab === "Templates" &&
+              <>
+                <TemplateBoxes></TemplateBoxes>
+                <TemplatePanel
+                  key={"TemplatePanel"}
+                  settings={settings}
+                  setSettings={setSettings}
+                />
+              </>
+            }
+            {
+              tab === "History" && <HistoryBoxes></HistoryBoxes>
+            }
           </div>
         </div>
         {/* <div className="mt-[50px] w-[100%] p-2">

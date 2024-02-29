@@ -1,4 +1,5 @@
-import { History, HistoryItem } from "./history_types";
+import { History, HistoryItem, HistoryWrap } from "./history_types";
+
 
 export function extractHistoryTree(
   history: History,
@@ -31,5 +32,24 @@ export function extractHistoryTree(
   return flatHistory;
 }
 
+export const Histories_Local_Storage_Key = 'histories'
+
+export const getHistoriesList = () : HistoryWrap[] => {
+  if(typeof window === 'undefined') return [];
+  const storedHistories = localStorage.getItem(Histories_Local_Storage_Key);
+  return storedHistories ? JSON.parse(storedHistories) : [];
+}
+
+export const setHistoiresList = (historiesList : HistoryWrap[]) => {
+  if(typeof window === 'undefined') return;
+  localStorage.setItem(Histories_Local_Storage_Key, JSON.stringify(historiesList));
+}
+
+export const findHistoryById = (id: string) : History => {
+  const histories : HistoryWrap[] = getHistoriesList();
+  const historyWrap = histories.find((historyWrap : HistoryWrap) => historyWrap.id === id);
+  if(historyWrap === undefined) throw new Error();
+  return historyWrap.items;
+}
 const t = {}
 export default t;
