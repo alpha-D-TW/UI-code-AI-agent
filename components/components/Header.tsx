@@ -22,7 +22,7 @@ export default () => {
       <div className="flex items-center">
         <div className="flex-1">
           <ul className="hidden md:flex float-right text-lg text-slate-700 items-center">
-            <li className="mx-2">
+            {/* <li className="mx-2">
               <OutputSettingsSection
                 generatedCodeConfig={settings.generatedCodeConfig}
                 setGeneratedCodeConfig={(config: GeneratedCodeConfig) =>
@@ -32,7 +32,7 @@ export default () => {
                   })
                 }
               />
-            </li>
+            </li> */}
             <li className="mx-2">
               <ThemeSettingsSection
                 generatedThemeConfig={settings.themeConfig}
