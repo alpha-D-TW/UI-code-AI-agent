@@ -7,6 +7,7 @@ import {
 } from "./systemPrompts";
 import { shortcutIdeas } from "@/components/components/chatInput/shortcutIdeas";
 import { USER_STORY_MAP } from "./userStoryPrompts";
+import { DSL_SYSTEM_PROMPT } from "./dslPrompt";
 
 const USER_PROMPT = `
 Generate code for a app that looks exactly like this.

@@ -41,8 +41,13 @@ export async function streamGenerateCode(
   socket: { enqueue: (v: any) => any }
 ) {
   // 基于LLM生成DSL
-  const dsl_prompt_messages = await DSLPrompt(params["text"]);
-  const generatedDSL = await useLLM(params, dsl_prompt_messages, socket);
+  const useInputTextDemand = params["text"];
+  let generatedDSL;
+  if (useInputTextDemand) {
+    const dsl_prompt_messages = await DSLPrompt(params["text"]);
+    generatedDSL = await useLLM(params, dsl_prompt_messages, socket);
+    console.log("generatedDSL---", generatedDSL);
+  }
 
   // 基于LLM生成Code
   const generated_code_config = params["generatedCodeConfig"];
@@ -68,7 +73,7 @@ export async function streamGenerateCode(
     } else {
       prompt_messages = await assemblePrompt(
         params["image"],
-        params["text"],
+        generatedDSL || useInputTextDemand,
         generated_code_config,
         params["promptCode"],
         params.slug,

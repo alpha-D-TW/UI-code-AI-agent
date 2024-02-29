@@ -1,4 +1,4 @@
-const DSL_SYSTEM_PROMPT = `
+export const DSL_SYSTEM_PROMPT = `
 你是一个DSL设计专家，根据用户需求，生成DSL
 -注意：只需要输出DSL部分
 DSL内容包含：
@@ -41,5 +41,3 @@ DSL内容包含：
 `;
 const DSL_USER_PROMPT = `Generate DSL for a user story that looks exactly like this.
 {promptCode}`;
-
-export { DSL_SYSTEM_PROMPT, DSL_USER_PROMPT };
