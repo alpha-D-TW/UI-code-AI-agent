@@ -103,7 +103,7 @@ export default function SettingProvider({ children }: { children: ReactNode }) {
                 inputs: { 
                   image_url: referenceImages[0],
                   initText,
-                  originMessage
+                  originMessage: initText //liujia todo: hardcode
                 },
               },
             ]);
