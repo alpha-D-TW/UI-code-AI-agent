@@ -14,6 +14,7 @@ import {
   FaMobileAlt,
   FaHome,
 } from "react-icons/fa";
+import { BiSolidLike, BiSolidDislike } from "react-icons/bi";
 
 import { AiFillCodepenCircle } from "react-icons/ai";
 
@@ -474,6 +475,14 @@ function App() {
     form.submit();
   }, [generatedCode]);
 
+  const handleLike = () => {
+
+  }
+
+  const handleDislike = () => {
+
+  }
+
   return (
     <div className="dark:bg-black dark:text-white h-full">
       <div className="fixed inset-y-0 z-40 flex w-[300px] flex-col">
@@ -597,6 +606,14 @@ function App() {
                   className="hover:bg-slate-200 rounded-sm w-[36px] h-[36px] flex items-center justify-center border-black border-2"
                 >
                   <FaDownload />
+                </span>
+                <span onClick={handleLike}
+                      className="hover:bg-slate-200 rounded-sm w-[36px] h-[36px] flex items-center justify-center border-black border-2">
+                  <BiSolidLike />
+                </span>
+                <span onClick={handleDislike}
+                      className="hover:bg-slate-200 rounded-sm w-[36px] h-[36px] flex items-center justify-center border-black border-2">
+                  <BiSolidDislike />
                 </span>
                 {/* <span
                   className="hover:bg-slate-200 rounded-sm w-[36px] h-[36px] flex items-center justify-center border-black border-2"

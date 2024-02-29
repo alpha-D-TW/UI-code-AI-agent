@@ -8,7 +8,7 @@ interface Props {
 export default function UpdateChatInput({updateSendMessage}: Props) {
   const [chatValue, setChatValue] = useState('');
   const inputRef = useRef<any>(null);
-  
+
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.style.height = 'inherit'; // Reset the height
@@ -23,7 +23,7 @@ export default function UpdateChatInput({updateSendMessage}: Props) {
 
   return (
 
-      <div 
+      <div
         className="overflow-hidden max-w-[90%]  bottom-0 flex flex-col w-full sm:max-w-lg m-auto shadow-lg divide-zinc-600 min-h-12 bg-gray-900 shadow-black/40 rounded-[24px]"
       >
         <div className="flex items-center flex-1 min-w-0 px-3 md:pl-4 bg-gray-900 relative z-10">
@@ -37,10 +37,10 @@ export default function UpdateChatInput({updateSendMessage}: Props) {
                 <textarea
                   maxLength={1000}
                   ref={inputRef}
-                  className="flex-[1_0_50%] min-w-[50%] disabled:opacity-80 text-white text-sm bg-transparent border-0 shadow-none resize-none outline-none ring-0 disabled:bg-transparent selection:bg-indigo-300 selection:text-black placeholder:text-zinc-400 [scroll-padding-block:0.75rem] pr-2 leading-relaxed py-3 pl-1 [&amp;_textarea]:px-0" 
-                  spellCheck="false" 
-                  rows={1} 
-                  placeholder="Tell the AI what to change" 
+                  className="flex-[1_0_50%] min-w-[50%] disabled:opacity-80 text-white text-sm bg-transparent border-0 shadow-none resize-none outline-none ring-0 disabled:bg-transparent selection:bg-indigo-300 selection:text-black placeholder:text-zinc-400 [scroll-padding-block:0.75rem] pr-2 leading-relaxed py-3 pl-1 [&amp;_textarea]:px-0"
+                  spellCheck="false"
+                  rows={1}
+                  placeholder="Tell the AI in more detail what to change"
                   style={{
                     resize: 'none',
                     colorScheme: 'dark',
@@ -53,9 +53,9 @@ export default function UpdateChatInput({updateSendMessage}: Props) {
                 ></textarea>
               </div>
               <div className="flex items-center">
-                <button 
-                  className="shrink-0 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-transparent text-white hover:bg-gray-800 flex items-center justify-center focus-visible:ring-0 focus-visible:bg-gray-800 rounded-full w-[28px] h-[28px]" 
-                  type="submit" 
+                <button
+                  className="shrink-0 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-transparent text-white hover:bg-gray-800 flex items-center justify-center focus-visible:ring-0 focus-visible:bg-gray-800 rounded-full w-[28px] h-[28px]"
+                  type="submit"
                   id="update-button"
                   onClick={updateHandler}
                 >
