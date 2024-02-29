@@ -144,7 +144,7 @@ export default function ChatInput({ openWhiteboard, showAnim }: props) {
           </div>
         </div>
       </div>
-      <div className="flex flex-wrap items-center justify-center max-w-full gap-2 px-4 mx-auto mt-6 text-sm top-full whitespace-nowrap">
+      <div className="flex w-[70%] flex-wrap items-center justify-center max-w-full gap-2 px-4 mx-auto mt-6 text-sm top-full whitespace-nowrap">
         {shortcutIdeas.map((shortcut) => {
           return (
             <button
