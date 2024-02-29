@@ -137,7 +137,7 @@ function App() {
   const historyFn = useDebounceFn(
     () => {
       const slug = nextRouter.query.slug;
-      const id = nextRouter.query.id as string; //liujia todo: get history id
+      const id = nextRouter.query.id as string; 
 
       const history = findHistoryById(id);
       if (slug?.includes("history") || history) {
@@ -164,16 +164,15 @@ function App() {
           : (customTemplate as any);
         setGeneratedCode(template.code);
         //liujia todo check: reference text is always empty && histories is not support here
-        let historyId = addHistory(
+        addHistory(
           "create",
           updateInstruction,
           referenceImages,
           referenceText,
           template.code,
           partValue.message,
-          currentHistoryId,
+          false,
         );
-        setCurrentHistoryId(historyId);
         setAppState(AppState.CODE_READY);
         if (template) {
           setTemplate(template);
@@ -338,16 +337,16 @@ function App() {
       (token) => setGeneratedCode((prev) => prev + token),
       (code) => {
         setGeneratedCode(code);
-        let historyId = addHistory(
+        let isAdditive = history.length !== 0;
+        addHistory(
           params.generationType,
           updateInstruction,
           referenceImages,
-          params.text || "",
+          params.text ? params.text : "",
           code,
           partValue.message,
-          currentHistoryId
+          isAdditive
         );
-        setCurrentHistoryId(historyId);
       },
       (line) => setExecutionConsole((prev) => [...prev, line]),
       () => {

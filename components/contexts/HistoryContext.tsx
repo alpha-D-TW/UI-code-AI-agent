@@ -15,7 +15,7 @@ interface historyContextType {
       initText: string, 
       code: string,
       originMessage: string,
-      id: string,
+      isAdditive: boolean,
     ) => string;
     updateHistoryScreenshot: (img: string, version?: number) => void;
     updateHistoryCode: (img: string, version?: number) => void;
@@ -27,7 +27,7 @@ const initialValue = {
     history: [],
     currentVersion: null,
     setCurrentVersion: (version: number | null) => {},
-    addHistory: (generationType: string, updateInstruction: string, referenceImages: string[], initText: string, code: string, originMessage:string ,id: string) => "",
+    addHistory: (generationType: string, updateInstruction: string, referenceImages: string[], initText: string, code: string, originMessage:string ,isAdditive: boolean) => "",
     updateHistoryScreenshot: (img: string, version?: number) => {},
     updateHistoryCode: (img: string, version?: number) => {},
     resetHistory: () => {},
@@ -56,12 +56,13 @@ export default function SettingProvider({ children }: { children: ReactNode }) {
       setHistoiresList(storedHistories);
     }
 
-    const addNewHistories = () => {
+    function addNewHistories() : string{
         let storedHistories = getHistoriesList();
         const newId = uuidv4();
         setId(newId);
         storedHistories = [...storedHistories, {id: newId, items: history}];
         setHistoiresList(storedHistories);
+        return newId;
     }
 
     const resetHistories = () => {
@@ -85,13 +86,14 @@ export default function SettingProvider({ children }: { children: ReactNode }) {
     function regain(history : History, id: string) {
       setId(id);
       setHistory(history);
-      setCurrentVersionStatus(history.length - 1);
+      setCurrentVersionStatus(history? history.length - 1 : 0);
     }
 
-    function addHistory (generationType: string, updateInstruction: string, referenceImages: string[], initText: string, code: string, originMessage: string, historyId: string) : string {
+    function addHistory (generationType: string, updateInstruction: string, referenceImages: string[], initText: string, code: string, originMessage: string, isAdditive: boolean) : string {
         if (generationType === "create") {
-            if(!historyId) {
-              addNewHistories();
+          let newId = ""
+            if(!isAdditive) {
+              newId = addNewHistories();
             }
             setHistory([
               {
@@ -106,6 +108,7 @@ export default function SettingProvider({ children }: { children: ReactNode }) {
               },
             ]);
             setCurrentVersionStatus(0);
+            return newId;
           } else {
             setHistory((prev) => {
               // Validate parent version
@@ -165,9 +168,8 @@ export default function SettingProvider({ children }: { children: ReactNode }) {
     }
 
     function resetHistory() {
-      //liujia history todo: should not clear history when destory page
-      // setHistory([]);
-      // setCurrentVersionStatus(0);
+      regain([], "");
+      setCurrentVersionStatus(0);
     }
 
     return (
