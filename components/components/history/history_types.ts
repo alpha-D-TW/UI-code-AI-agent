@@ -30,3 +30,8 @@ export type AiEditInputs = {
 };
 
 export type History = HistoryItem[];
+
+export type HistoryWrap = {
+  id: string;
+  items: History;
+}

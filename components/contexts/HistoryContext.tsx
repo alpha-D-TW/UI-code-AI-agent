@@ -1,6 +1,8 @@
 import { createContext, ReactNode, useState, useEffect, useRef } from 'react';
-import { History, HistoryItem } from "../components/history/history_types";
+import { HistoryWrap, History, HistoryItem } from "../components/history/history_types";
 import toast from "react-hot-toast";
+import { v4 as uuidv4 } from "uuid";
+import { Histories_Local_Storage_Key, getHistoriesList, setHistoiresList } from '../components/history/utils';
 
 interface historyContextType {
     history: History;
@@ -13,42 +15,84 @@ interface historyContextType {
       initText: string, 
       code: string,
       originMessage: string,
-    ) => void;
+      id: string,
+    ) => string;
     updateHistoryScreenshot: (img: string, version?: number) => void;
     updateHistoryCode: (img: string, version?: number) => void;
     resetHistory: () => void;
+    regain: (history : History, id: string) => void ;
 }
 
 const initialValue = {
     history: [],
     currentVersion: null,
     setCurrentVersion: (version: number | null) => {},
-    addHistory: (generationType: string, updateInstruction: string, referenceImages: string[], initText: string, code: string) => {},
+    addHistory: (generationType: string, updateInstruction: string, referenceImages: string[], initText: string, code: string, originMessage:string ,id: string) => "",
     updateHistoryScreenshot: (img: string, version?: number) => {},
     updateHistoryCode: (img: string, version?: number) => {},
-    resetHistory: () => {}
+    resetHistory: () => {},
+    regain: (history : History, id: string) => {}
 }
 
 export const HistoryContext = createContext<historyContextType>(initialValue);
 
+
 export default function SettingProvider({ children }: { children: ReactNode }) {
-    // const [history , setHistory] = useState<History>([]);
+    const [id, setId] = useState("");
     const [history , setHistory] = useState<History>(() => {
-      if(typeof window !== 'undefined') {
-        const storedHistory = localStorage.getItem('history');
-        return storedHistory ? JSON.parse(storedHistory) : [];
+      if(typeof window !== 'undefined' && id) {
+        const storedHistoriesList : HistoryWrap[] = getHistoriesList();
+        const histories = storedHistoriesList.find( (stored: HistoryWrap) => stored.id === id);
+        return histories ? histories.items : [];
       }
       return [];
     });
 
+    const updateHistories = () => {
+      if(typeof window === 'undefined') return;
+      const storedHistories = getHistoriesList();
+      const index = storedHistories.findIndex( (stored: HistoryWrap) => stored.id === id);
+      storedHistories[index] = {id: id , items: history};
+      setHistoiresList(storedHistories);
+    }
+
+    const addNewHistories = () => {
+        let storedHistories = getHistoriesList();
+        const newId = uuidv4();
+        setId(newId);
+        storedHistories = [...storedHistories, {id: newId, items: history}];
+        setHistoiresList(storedHistories);
+    }
+
+    const resetHistories = () => {
+      if(typeof window === 'undefined') return;
+      localStorage.setItem(Histories_Local_Storage_Key, JSON.stringify([]));
+    }
+
     useEffect(() => {
-      localStorage.setItem('history', JSON.stringify(history));
+      const storedHistories = getHistoriesList();
+      if(!storedHistories) {
+        resetHistories();
+      } 
+      const historyExist = id && storedHistories.some( (stored: HistoryWrap) => stored.id === id);
+      if(historyExist) {
+        updateHistories();
+      }
     }, [history])
 
     let [currentVersion, setCurrentVersionStatus] = useState<number | null>(null);
 
-    function addHistory (generationType: string, updateInstruction: string, referenceImages: string[], initText: string, code: string, originMessage: string) {
+    function regain(history : History, id: string) {
+      setId(id);
+      setHistory(history);
+      setCurrentVersionStatus(history.length - 1);
+    }
+
+    function addHistory (generationType: string, updateInstruction: string, referenceImages: string[], initText: string, code: string, originMessage: string, historyId: string) : string {
         if (generationType === "create") {
+            if(!historyId) {
+              addNewHistories();
+            }
             setHistory([
               {
                 type: "ai_create",
@@ -88,6 +132,7 @@ export default function SettingProvider({ children }: { children: ReactNode }) {
               return newHistory;
             });
         }
+        return id;
     }
     const updateHistoryScreenshot = (img: string, version?: number) => {
 
@@ -121,8 +166,8 @@ export default function SettingProvider({ children }: { children: ReactNode }) {
 
     function resetHistory() {
       //liujia history todo: should not clear history when destory page
-      setHistory([]);
-      setCurrentVersionStatus(0);
+      // setHistory([]);
+      // setCurrentVersionStatus(0);
     }
 
     return (
@@ -134,7 +179,8 @@ export default function SettingProvider({ children }: { children: ReactNode }) {
             addHistory,
             updateHistoryScreenshot,
             resetHistory,
-            updateHistoryCode
+            updateHistoryCode,
+            regain
           }}
         >
           {children}

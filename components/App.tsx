@@ -24,7 +24,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
 import { Settings, EditorTheme, AppState, GeneratedCodeConfig } from "./types";
 import html2canvas from "html2canvas";
 import HistoryDisplay from "./components/history/HistoryDisplay";
-import { extractHistoryTree } from "./components/history/utils";
+import { extractHistoryTree, findHistoryById } from "./components/history/utils";
 import toast from "react-hot-toast";
 import { UploadFileContext } from "./contexts/UploadFileContext";
 import { SettingContext } from "./contexts/SettingContext";
@@ -45,6 +45,7 @@ import { useRouter as useNextRouter } from "next/router";
 import templates from "@/templates/templates";
 import SettingsDialog from "@/components/components/SettingsDialog";
 import Preview from "@/components/components/Preview";
+import { History } from "./components/history/history_types";
 
 const CodeTab = dynamic(async () => await import("./components/CodeTab"), {
   ssr: false,
@@ -86,6 +87,7 @@ function App() {
     setCurrentVersion,
     resetHistory,
     updateHistoryCode,
+    regain,
   } = useContext(HistoryContext);
   const { enableEdit, setEnableEdit, device, setDevice } =
     useContext(EditorContext);
@@ -98,6 +100,7 @@ function App() {
   const [template, setTemplate] = useState<any>({});
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const { debugTemplate, templateList } = useContext(TemplateContext);
+  const [currentHistoryId, setCurrentHistoryId] = useState<string>("");
 
   // Tracks the currently shown version from app history
 
@@ -131,6 +134,25 @@ function App() {
     }
   );
 
+  const historyFn = useDebounceFn(
+    () => {
+      const slug = nextRouter.query.slug;
+      const id = nextRouter.query.id as string; //liujia todo: get history id
+
+      const history = findHistoryById(id);
+      if (slug?.includes("history") || history) {
+        setGeneratedCode(history[history.length - 1].code);
+        regain(history, id);
+        setAppState(AppState.CODE_READY);
+        return;
+      }
+      doCreate([], "", slug as string);
+    },
+    {
+      wait: 300,
+    }
+  );
+
   const templateFn = useDebounceFn(
     () => {
       const slug = nextRouter.query.slug;
@@ -141,14 +163,17 @@ function App() {
           ? debugTemplate
           : (customTemplate as any);
         setGeneratedCode(template.code);
-        addHistory(
+        //liujia todo check: reference text is always empty && histories is not support here
+        let historyId = addHistory(
           "create",
           updateInstruction,
           referenceImages,
           referenceText,
           template.code,
-          partValue.message
+          partValue.message,
+          currentHistoryId,
         );
+        setCurrentHistoryId(historyId);
         setAppState(AppState.CODE_READY);
         if (template) {
           setTemplate(template);
@@ -227,19 +252,23 @@ function App() {
     //     }
     // }, [appState])
 
-    useEffect(() => {
-        const slug = nextRouter.query.slug;
-        if (slug === "create") {
-            if (dataUrls.length) {
-                initFn.run();
-            }
-            if (initCreateText) {
-                initTextFn.run();
-            }
-        } else {
-            templateFn.run();
-        }
-    }, [initCreate, dataUrls, initCreateText, template]);
+  useEffect(() => {
+    const slug = nextRouter.query.slug;
+    if(slug?.includes("history")) {
+      historyFn.run();
+      return;
+    }
+    if (slug === "create") {
+      if (dataUrls.length) {
+        initFn.run();
+      }
+      if (initCreateText) {
+        initTextFn.run();
+      }
+    } else {
+      templateFn.run();
+    }
+  }, [initCreate, dataUrls, initCreateText, template]);
 
   const takeScreenshot = async (): Promise<string> => {
     const iframeElement = document.querySelector(
@@ -309,14 +338,16 @@ function App() {
       (token) => setGeneratedCode((prev) => prev + token),
       (code) => {
         setGeneratedCode(code);
-        addHistory(
+        let historyId = addHistory(
           params.generationType,
           updateInstruction,
           referenceImages,
           params.text || "",
           code,
-          partValue.message
+          partValue.message,
+          currentHistoryId
         );
+        setCurrentHistoryId(historyId);
       },
       (line) => setExecutionConsole((prev) => [...prev, line]),
       () => {

@@ -6,6 +6,7 @@ import { UploadFileContext } from "../components/contexts/UploadFileContext";
 import { useRouter } from "next/router";
 import classNames from "classnames";
 import TemplateBoxes from "@/components/components/TemplateBoxes";
+import HistoryBoxes from "@/components/components/HistoryBoxes";
 
 import dynamic from "next/dynamic";
 import TemplatePanel from "@/components/components/TemplatePanel";
@@ -222,7 +223,7 @@ export default function Dashboard() {
               </>
             }
             {
-              tab === "History" && <div>There should show History boxes</div>
+              tab === "History" && <HistoryBoxes></HistoryBoxes>
             }
 >>>>>>> e55b15e ([liujia]feature: add history tab)
           </div>
