@@ -90,7 +90,7 @@ export async function streamingOpenAIResponses(
   }
 ) {
   if (params.llm === "moonshot") {
-    console.log("start use moonshot",'message', messages);
+    console.log("start use moonshot", "message", messages);
     if (!params.moonshotApiKey) {
       callback("No Moonshot key, set it", "error");
       return "";
@@ -115,9 +115,9 @@ export async function streamingOpenAIResponses(
     }
 
     return full_response;
-  } else if (params.llm === 'baichuan') {
-    console.log("start use baichuan", 'message', messages);
-    
+  } else if (params.llm === "baichuan") {
+    console.log("start use baichuan", "message", messages);
+
     if (!params.baichuanApikey) {
       callback("No Baichuan key, set it", "error");
       return "";
@@ -155,9 +155,9 @@ export async function streamingOpenAIResponses(
         process.env["OPENAI_BASE_URL"] ||
         "https://api.openai.com/v1",
     });
-  
+
     const stream = await openai.chat.completions.create({
-      model: "gpt-4-vision-preview",
+      model: "gpt-4-0125-preview",
       temperature: 0,
       max_tokens: 4096,
       messages,
@@ -169,9 +169,7 @@ export async function streamingOpenAIResponses(
       full_response += content;
       callback(content);
     }
-  
+
     return full_response;
   }
-
-  
 }
