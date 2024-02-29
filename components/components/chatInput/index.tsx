@@ -6,32 +6,7 @@ import { LiaPencilRulerSolid } from "react-icons/lia";
 import classNames from "classnames";
 import { GoArrowUpRight } from "react-icons/go";
 import Spinner from "../Spinner";
-
-const shortcutIdeas = [
-  {
-    id: "InsuranceProductCategories",
-    label: "Insurance product list",
-    value:
-      "A list of insurance product categories with image, name and description.",
-  },
-  {
-    id: "InsuranceProductDetail",
-    label: "Insurance product list",
-    value:
-      "A detail of insurance product with image, name and description and suitable people",
-  },
-  // {
-  //   id: 'Contactform',
-  //   label: 'Contact form',
-  //   value: 'A contact form with first name, last name, email, and message fields. Put the form in a card with a submit button.'
-  // },
-  {
-    id: "InsurancePriceCalculate",
-    label: "Insurance Price Calculate",
-    value:
-      "A detail of insurance product price calcuate with img, name, description, price rule and total css ",
-  },
-];
+import { shortcutIdeas } from "./shortcutIdeas";
 
 interface props {
   openWhiteboard: () => void;
