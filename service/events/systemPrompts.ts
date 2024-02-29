@@ -436,8 +436,9 @@ In terms of libraries,
   <script src="  https://registry.npmmirror.com/@ant-design/icons/5.2.6/files/dist/index.umd.js"></script>
   <script src="https://registry.npmmirror.com/@ant-design/pro-components/2.6.43/files/dist/pro-components.min.js"></script>
 
-Return only the full code in <html></html> tags.
 Do not include markdown "\`\`\`" or "\`\`\`html" or "\`\`\`xml" at the start or end.
+Return only the full code in <html></html> tags.
+Start with <!DOCTYPE html>
 `;
 
 const VUE_TAILWIND_SYSTEM_PROMPT_TEXT = `

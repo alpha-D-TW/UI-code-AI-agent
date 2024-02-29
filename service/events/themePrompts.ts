@@ -27,6 +27,8 @@ const THEME_1_PROMPT = `
     document.getElementById('root')
   );
   For the requirement description, use the colors declared by the config in the custom theme.
+  Do not include markdown "\`\`\`" or "\`\`\`html" or "\`\`\`xml" at the start or end.
+  Return only the full code in <html></html> tags.
   Start with <!DOCTYPE html>
 `;
 
@@ -59,6 +61,9 @@ const THEME_2_PROMPT = `
     document.getElementById('root')
   );
   For the requirement description, use the colors declared by config in the custom theme.
+
+  Do not include markdown "\`\`\`" or "\`\`\`html" or "\`\`\`xml" at the start or end.
+  Return only the full code in <html></html> tags.
   Start with <!DOCTYPE html>
 `;
 
@@ -91,6 +96,8 @@ const THEME_3_PROMPT = `
     document.getElementById('root')
   );
   For the requirement description, use the colors declared by config in the custom theme.
+  Do not include markdown "\`\`\`" or "\`\`\`html" or "\`\`\`xml" at the start or end.
+  Return only the full code in <html></html> tags.
   Start with <!DOCTYPE html>
 `;
 
