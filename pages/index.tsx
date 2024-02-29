@@ -155,62 +155,7 @@ export default function Dashboard() {
                             </a>
                         </nav> */}
           </div>
-
           <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-<<<<<<< HEAD
-<<<<<<< HEAD
-            {templates.list.map((template) => {
-              return (
-                <div
-                  onClick={() => {
-                    setSettings({
-                      ...settings,
-                      generatedCodeConfig: GeneratedCodeConfig.REACT_ANTD,
-                    });
-                    router.push(`/editor/${template.id}`);
-                  }}
-                  key={template.id}
-                  className="bg-white shadow-lg rounded-lg p-4 flex flex-col hover:ring ring-black relative border"
-                >
-                  <div className="flex-1">
-                    <div className="aspect-[1376/768]">
-                      <img
-                        className="w-full"
-                        src={template.imageUrl}
-                        alt={template.title}
-                      />
-                    </div>
-                    <h3 className="mt-4 text-sm text-gray-700">
-                      {template.title}
-                    </h3>
-                    <p className="mt-1 text-lg font-medium text-gray-900">
-                      {template.description}
-                    </p>
-                  </div>
-                  {template.fromUrl && (
-                    <a
-                      onClick={(e) => {
-                        e.stopPropagation();
-                      }}
-                      className="absolute right-2 top-2"
-                      href={template.fromUrl}
-                      target="_blank"
-                    >
-                      <FaGithubSquare className="text-xl" />
-                    </a>
-                  )}
-                </div>
-              );
-            })}
-=======
-            <TemplateBoxes></TemplateBoxes>
->>>>>>> 800eee5 ([liujia]refactoring: extract templateBoxes component)
-            <TemplatePanel
-              key={"TemplatePanel"}
-              settings={settings}
-              setSettings={setSettings}
-            />
-=======
             {
               tab === "Templates" &&
               <>
@@ -225,7 +170,6 @@ export default function Dashboard() {
             {
               tab === "History" && <HistoryBoxes></HistoryBoxes>
             }
->>>>>>> e55b15e ([liujia]feature: add history tab)
           </div>
         </div>
         {/* <div className="mt-[50px] w-[100%] p-2">
