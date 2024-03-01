@@ -24,7 +24,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
 import { Settings, EditorTheme, AppState, GeneratedCodeConfig } from "./types";
 import html2canvas from "html2canvas";
 import HistoryDisplay from "./components/history/HistoryDisplay";
-import { extractHistoryTree, findHistoryById } from "./components/history/utils";
+import {
+  extractHistoryTree,
+  findHistoryById,
+} from "./components/history/utils";
 import toast from "react-hot-toast";
 import { UploadFileContext } from "./contexts/UploadFileContext";
 import { SettingContext } from "./contexts/SettingContext";
@@ -69,7 +72,7 @@ function App() {
   }>({ uid: "", message: "" });
 
   const { dataUrls, setDataUrls } = useContext(UploadFileContext);
-  const [isLike, setIsLike] = useState<boolean | ''>('')
+  const [isLike, setIsLike] = useState<boolean | "">("");
 
   // Settings
   const {
@@ -102,6 +105,17 @@ function App() {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const { debugTemplate, templateList } = useContext(TemplateContext);
   const [currentHistoryId, setCurrentHistoryId] = useState<string>("");
+  const [userStory, setUserStory] = useState<any>();
+  interface IUserStory {
+    userStory: string;
+  }
+  useEffect(() => {
+    let tempUserStory = window.localStorage.getItem("userStory");
+    let cookieObject: IUserStory = JSON.parse(tempUserStory!);
+    console.log("userStory----", cookieObject.userStory);
+
+    setUserStory(cookieObject.userStory);
+  }, [window.localStorage]);
 
   // Tracks the currently shown version from app history
 
@@ -172,7 +186,7 @@ function App() {
           referenceText,
           template.code,
           partValue.message,
-          false,
+          false
         );
         setAppState(AppState.CODE_READY);
         if (template) {
@@ -205,56 +219,56 @@ function App() {
     }
   }, [settings.generatedCodeConfig, setSettings]);
 
-    // function validateHTML(htmlCode: string) {
-    //     const newCount = count + 1
-    //     setCount(newCount)
-    //     return new Promise((resolve, reject) => {
-    //         fetch('https://validator.w3.org/nu/?out=json', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'text/html',
-    //             },
-    //             body: htmlCode,
-    //         })
-    //             .then(response => response.json())
-    //             .then(data => {
-    //                 // 处理验证结果
-    //                 resolve(data)
-    //                 console.log(data);
-    //             })
-    //             .catch(error => {
-    //                 // 处理请求错误
-    //                 reject(error)
-    //                 console.error('请求出错:', error);
-    //             });
-    //     })
-    // }
+  // function validateHTML(htmlCode: string) {
+  //     const newCount = count + 1
+  //     setCount(newCount)
+  //     return new Promise((resolve, reject) => {
+  //         fetch('https://validator.w3.org/nu/?out=json', {
+  //             method: 'POST',
+  //             headers: {
+  //                 'Content-Type': 'text/html',
+  //             },
+  //             body: htmlCode,
+  //         })
+  //             .then(response => response.json())
+  //             .then(data => {
+  //                 // 处理验证结果
+  //                 resolve(data)
+  //                 console.log(data);
+  //             })
+  //             .catch(error => {
+  //                 // 处理请求错误
+  //                 reject(error)
+  //                 console.error('请求出错:', error);
+  //             });
+  //     })
+  // }
 
-    // useEffect(() => {
-    //     if(count > 1){
-    //         return
-    //     }
-    //     if (appState === AppState.CODE_READY) {
-    //         validateHTML(generatedCode).then((result: any) => {
-    //             console.log(result,'rrrrrr------')
-    //             // const str = result.message?.splice(0).map((item: { type: string, message: string }) => {
-    //             //     return `${item.type} ${item.message}`;
-    //             // }).join(';')
-    //             // doGenerateCode(
-    //             //     {
-    //             //         generationType: "create",
-    //             //         image: referenceImages[0],
-    //             //         text: str,
-    //             //     },
-    //             //     currentVersion
-    //             // );
-    //         })
-    //     }
-    // }, [appState])
+  // useEffect(() => {
+  //     if(count > 1){
+  //         return
+  //     }
+  //     if (appState === AppState.CODE_READY) {
+  //         validateHTML(generatedCode).then((result: any) => {
+  //             console.log(result,'rrrrrr------')
+  //             // const str = result.message?.splice(0).map((item: { type: string, message: string }) => {
+  //             //     return `${item.type} ${item.message}`;
+  //             // }).join(';')
+  //             // doGenerateCode(
+  //             //     {
+  //             //         generationType: "create",
+  //             //         image: referenceImages[0],
+  //             //         text: str,
+  //             //     },
+  //             //     currentVersion
+  //             // );
+  //         })
+  //     }
+  // }, [appState])
 
   useEffect(() => {
     const slug = nextRouter.query.slug;
-    if(slug?.includes("history")) {
+    if (slug?.includes("history")) {
       historyFn.run();
       return;
     }
@@ -507,8 +521,8 @@ function App() {
   }, [generatedCode]);
 
   const handleLike = (like: boolean) => {
-    setIsLike(like)
-  }
+    setIsLike(like);
+  };
 
   return (
     <div className="dark:bg-black dark:text-white h-full">
@@ -577,6 +591,14 @@ function App() {
                     <></>
                   )}
                 </div>
+                {userStory && (
+                  <div className="flex flex-col ">
+                    <h1 className="font-bold mb-2 mt-4">User Story</h1>
+                    <div className="border p-1 border-slate-200 w-full rounded bg-[#ebebeb] max-h-80 overflow-y-scroll">
+                      <p className="text-sm">{userStory}</p>
+                    </div>
+                  </div>
+                )}
                 <div className="bg-gray-400 px-4 py-2 rounded text-sm hidden">
                   <h2 className="text-lg mb-4 border-b border-gray-800">
                     Console
@@ -634,27 +656,30 @@ function App() {
                 >
                   <FaDownload />
                 </span>
-                {
-                    typeof isLike === "boolean" && (
-                        <span onClick={()=>handleLike(!isLike)}
-                              className="hover:bg-slate-200 rounded-sm w-[36px] h-[36px] flex items-center justify-center border-black border-2">
-                          { isLike ? <BiSolidLike/> : <BiSolidDislike/>}
-                        </span>)
-                }
-                {
-                    typeof isLike === "string" && (
-                        <>
-                          <span onClick={()=>handleLike(true)}
-                                className="hover:bg-slate-200 rounded-sm w-[36px] h-[36px] flex items-center justify-center border-black border-2">
-                          <BiSolidLike/>
-                          </span>
-                          <span onClick={()=>handleLike(false)}
-                                className="hover:bg-slate-200 rounded-sm w-[36px] h-[36px] flex items-center justify-center border-black border-2">
-                              <BiSolidDislike/>
-                            </span>
-                        </>
-                    )
-                }
+                {typeof isLike === "boolean" && (
+                  <span
+                    onClick={() => handleLike(!isLike)}
+                    className="hover:bg-slate-200 rounded-sm w-[36px] h-[36px] flex items-center justify-center border-black border-2"
+                  >
+                    {isLike ? <BiSolidLike /> : <BiSolidDislike />}
+                  </span>
+                )}
+                {typeof isLike === "string" && (
+                  <>
+                    <span
+                      onClick={() => handleLike(true)}
+                      className="hover:bg-slate-200 rounded-sm w-[36px] h-[36px] flex items-center justify-center border-black border-2"
+                    >
+                      <BiSolidLike />
+                    </span>
+                    <span
+                      onClick={() => handleLike(false)}
+                      className="hover:bg-slate-200 rounded-sm w-[36px] h-[36px] flex items-center justify-center border-black border-2"
+                    >
+                      <BiSolidDislike />
+                    </span>
+                  </>
+                )}
                 {/* <span
                   className="hover:bg-slate-200 rounded-sm w-[36px] h-[36px] flex items-center justify-center border-black border-2"
                   onClick={() => {
@@ -712,15 +737,15 @@ function App() {
               <TabsList>
                 {settings.generatedCodeConfig ===
                 GeneratedCodeConfig.REACT_NATIVE ? (
-                    <TabsTrigger value="native" className="flex gap-x-2">
-                      <FaDesktop /> native Mobile
-                    </TabsTrigger>
+                  <TabsTrigger value="native" className="flex gap-x-2">
+                    <FaDesktop /> native Mobile
+                  </TabsTrigger>
                 ) : (
-                    <>
-                      <TabsTrigger value="desktop" className="flex gap-x-2">
-                        <FaDesktop /> Desktop
-                      </TabsTrigger>
-                    </>
+                  <>
+                    <TabsTrigger value="desktop" className="flex gap-x-2">
+                      <FaDesktop /> Desktop
+                    </TabsTrigger>
+                  </>
                 )}
                 <TabsTrigger value="code" className="flex gap-x-2">
                   <FaCode />
@@ -757,7 +782,12 @@ function App() {
                 />
               </div>
 
-               <Preview code={generatedCode} device="desktop" appState={appState} fixBug={fixBug}/>
+              <Preview
+                code={generatedCode}
+                device="desktop"
+                appState={appState}
+                fixBug={fixBug}
+              />
             </div>
             <div
               className={classNames("h-full", {

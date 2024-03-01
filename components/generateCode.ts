@@ -1,6 +1,8 @@
 import toast from "react-hot-toast";
 import { request } from "./lib/request";
 import { map } from "lodash";
+import { shortcutIdeas } from "./components/chatInput/shortcutIdeas";
+import { USER_STORY_MAP } from "@/service/events/userStoryPrompts";
 
 const textDecoder = new TextDecoder("utf-8");
 const ERROR_MESSAGE =
@@ -136,6 +138,19 @@ export function generateCode(
     toast.success(STOP_MESSAGE);
     onComplete();
   });
+
+  const text_data = params["text"];
+  if (text_data) {
+    let userStory = text_data;
+    const findTemptUsrSToreInfo = shortcutIdeas.filter((item) =>
+      item.value.includes(text_data)
+    );
+    if (findTemptUsrSToreInfo.length > 0) {
+      const userStoryId = findTemptUsrSToreInfo[0].id;
+      userStory = (USER_STORY_MAP as any)[userStoryId];
+      window.localStorage.setItem("userStory", JSON.stringify({ userStory }));
+    }
+  }
 
   try {
     request
