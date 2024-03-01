@@ -25,6 +25,8 @@ const INSURANCE_PRODUCT_LIST_PROMPT = `生成一个保险产品列表页面，
     GIVEN：用户已经使用过滤条件查看列表
     WHEN：更改过滤条件并提交
     THEN：产品列表立即更新以显示匹配新过滤条件的产品
+    
+    注意：mock至少10条数据。
 `;
 
 const CAR_INSURANCE_ONLINE_CALCULATOR_PROMPT = `生成一个车险在线计算器页面，
