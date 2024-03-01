@@ -1,26 +1,16 @@
-import { useEffect, useState, useContext } from "react";
-import {
-  DesignerView,
-  Designer,
-  AutoCodePluginManager,
-  ILowCodePluginContext,
-} from "./designer";
-import { Editor, globalContext } from "./editor-core";
-import { AppState, GeneratedCodeConfig } from "../components/types";
+import {useContext, useEffect, useState} from "react";
+import {AutoCodePluginManager, Designer, DesignerView, ILowCodePluginContext, ProjectView,} from "./designer";
+import {Editor, globalContext} from "./editor-core";
+import {AppState, GeneratedCodeConfig} from "../components/types";
 import useThrottle from "../components/hooks/useThrottle";
-import { setHtmlCodeUid } from "../components/compiler";
+import {setHtmlCodeUid} from "../components/compiler";
 import html2canvas from "html2canvas";
-import { HistoryContext } from "../components/contexts/HistoryContext";
-import {
-  EditorContext,
-  deviceType,
-} from "../components/contexts/EditorContext";
-import { cloneDeep } from "lodash";
-import { FaBug } from "react-icons/fa";
+import {HistoryContext} from "../components/contexts/HistoryContext";
+import {EditorContext,} from "../components/contexts/EditorContext";
+import {FaBug} from "react-icons/fa";
 import filesTemplate from "./apps/react-shadcnui/files-template";
-import { useSandpack, SandpackProvider } from "@codesandbox/sandpack-react";
-import { cn } from "../components/lib/utils";
-import classNames from "classnames";
+import {SandpackProvider, useSandpack} from "@codesandbox/sandpack-react";
+import Spinner from "@/components/components/Spinner";
 
 // filesTemplate['/src/Preview.jsx'] = `
 // import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "components/ui/card";
@@ -273,18 +263,28 @@ export default function PreviewBox({
               }, 1000);
             }}
           />
-          <DesignerView
-            editor={editor}
-            designer={editor.get("designer")}
-            simulatorProps={{
-              simulatorUrl: "",
-              isSandpack: true,
-              files: filesObj,
-            }}
-          />
+          {
+            appState === AppState.CODE_READY ? (<DesignerView
+                editor={editor}
+                designer={editor.get("designer")}
+                simulatorProps={{
+                  simulatorUrl: "",
+                  isSandpack: true,
+                  files: filesObj,
+                }}
+            />) : (
+                <>
+                  <div className="flex items-center flex-col">
+                    <Spinner />
+                    <span className="text-xs text-gray-700">Please waiting...</span>
+                  </div>
+                </>
+            )
+          }
+
         </SandpackProvider>
       )}
-      {generatedCodeConfig !== GeneratedCodeConfig.REACT_SHADCN_UI && (
+      {generatedCodeConfig !== GeneratedCodeConfig.REACT_SHADCN_UI && appState === AppState.CODE_READY &&(
         <DesignerView
           editor={editor}
           designer={editor.get("designer")}
@@ -295,6 +295,17 @@ export default function PreviewBox({
           }}
         />
       )}
+      {
+          appState !== AppState.CODE_READY && (
+              <>
+                <div className="flex items-center flex-col">
+                  <Spinner />
+                  <span className="text-xs text-gray-700">Please waiting...</span>
+                </div>
+              </>
+
+          )
+      }
     </div>
   );
 }

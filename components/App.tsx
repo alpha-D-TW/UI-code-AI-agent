@@ -714,14 +714,14 @@ function App() {
               </>
             )}
 
-            {appState === AppState.CODING && (
-              <>
-                <span className="flex items-center gap-x-1">
-                  <Spinner />
-                  {executionConsole.slice(-1)[0]}
-                </span>
-              </>
-            )}
+            {/*{appState === AppState.CODING && (*/}
+            {/*  <>*/}
+            {/*    <span className="flex items-center gap-x-1">*/}
+            {/*      <Spinner />*/}
+            {/*      {executionConsole.slice(-1)[0]}*/}
+            {/*    </span>*/}
+            {/*  </>*/}
+            {/*)}*/}
           </div>
           <Tabs
             onValueChange={(e: any) => {
