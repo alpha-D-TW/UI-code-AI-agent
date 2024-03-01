@@ -69,6 +69,7 @@ function App() {
   }>({ uid: "", message: "" });
 
   const { dataUrls, setDataUrls } = useContext(UploadFileContext);
+  const [isLike, setIsLike] = useState<boolean | ''>('')
 
   // Settings
   const {
@@ -96,7 +97,7 @@ function App() {
   //     ? "native"
   //     : "desktop"
   // );
-  const [tabValue, setTabValue] = useState<string>("code");
+  const [tabValue, setTabValue] = useState<string>("desktop");
   const [template, setTemplate] = useState<any>({});
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const { debugTemplate, templateList } = useContext(TemplateContext);
@@ -137,7 +138,7 @@ function App() {
   const historyFn = useDebounceFn(
     () => {
       const slug = nextRouter.query.slug;
-      const id = nextRouter.query.id as string; 
+      const id = nextRouter.query.id as string;
 
       const history = findHistoryById(id);
       if (slug?.includes("history") || history) {
@@ -505,12 +506,8 @@ function App() {
     form.submit();
   }, [generatedCode]);
 
-  const handleLike = () => {
-
-  }
-
-  const handleDislike = () => {
-
+  const handleLike = (like: boolean) => {
+    setIsLike(like)
   }
 
   return (
@@ -637,14 +634,27 @@ function App() {
                 >
                   <FaDownload />
                 </span>
-                <span onClick={handleLike}
-                      className="hover:bg-slate-200 rounded-sm w-[36px] h-[36px] flex items-center justify-center border-black border-2">
-                  <BiSolidLike />
-                </span>
-                <span onClick={handleDislike}
-                      className="hover:bg-slate-200 rounded-sm w-[36px] h-[36px] flex items-center justify-center border-black border-2">
-                  <BiSolidDislike />
-                </span>
+                {
+                    typeof isLike === "boolean" && (
+                        <span onClick={()=>handleLike(!isLike)}
+                              className="hover:bg-slate-200 rounded-sm w-[36px] h-[36px] flex items-center justify-center border-black border-2">
+                          { isLike ? <BiSolidLike/> : <BiSolidDislike/>}
+                        </span>)
+                }
+                {
+                    typeof isLike === "string" && (
+                        <>
+                          <span onClick={()=>handleLike(true)}
+                                className="hover:bg-slate-200 rounded-sm w-[36px] h-[36px] flex items-center justify-center border-black border-2">
+                          <BiSolidLike/>
+                          </span>
+                          <span onClick={()=>handleLike(false)}
+                                className="hover:bg-slate-200 rounded-sm w-[36px] h-[36px] flex items-center justify-center border-black border-2">
+                              <BiSolidDislike/>
+                            </span>
+                        </>
+                    )
+                }
                 {/* <span
                   className="hover:bg-slate-200 rounded-sm w-[36px] h-[36px] flex items-center justify-center border-black border-2"
                   onClick={() => {
@@ -696,26 +706,26 @@ function App() {
             //     ? "native"
             //     : "desktop"
             // }
-            defaultValue={"code"}
+            defaultValue={"desktop"}
           >
             <div className="flex justify-end mr-8 mb-4">
               <TabsList>
+                {settings.generatedCodeConfig ===
+                GeneratedCodeConfig.REACT_NATIVE ? (
+                    <TabsTrigger value="native" className="flex gap-x-2">
+                      <FaDesktop /> native Mobile
+                    </TabsTrigger>
+                ) : (
+                    <>
+                      <TabsTrigger value="desktop" className="flex gap-x-2">
+                        <FaDesktop /> Desktop
+                      </TabsTrigger>
+                    </>
+                )}
                 <TabsTrigger value="code" className="flex gap-x-2">
                   <FaCode />
                   Code
                 </TabsTrigger>
-                {settings.generatedCodeConfig ===
-                GeneratedCodeConfig.REACT_NATIVE ? (
-                  <TabsTrigger value="native" className="flex gap-x-2">
-                    <FaDesktop /> native Mobile
-                  </TabsTrigger>
-                ) : (
-                  <>
-                    <TabsTrigger value="desktop" className="flex gap-x-2">
-                      <FaDesktop /> Desktop
-                    </TabsTrigger>
-                  </>
-                )}
               </TabsList>
             </div>
             {tabValue === "native" && (
