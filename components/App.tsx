@@ -117,7 +117,7 @@ function App() {
     } else {
       setUserStory("");
     }
-  }, [window.localStorage]);
+  }, []);
 
   // Tracks the currently shown version from app history
 
