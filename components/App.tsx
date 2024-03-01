@@ -635,7 +635,6 @@ function App() {
       <main className="pl-[300px] relative h-full flex flex-col pb-10">
         <div className="w-[96%] ml-[2%] flex-1 mt-4">
           <div className="flex absolute gap-2">
-            {appState === AppState.CODE_READY && (
               <>
                 {/* {GeneratedCodeConfig.REACT_SHADCN_UI !==
                   settings.generatedCodeConfig && (
@@ -712,7 +711,7 @@ function App() {
                   <PiCursorClickFill className="w-[18px] h-[18px]" />
                 </span> */}
               </>
-            )}
+
 
             {/*{appState === AppState.CODING && (*/}
             {/*  <>*/}

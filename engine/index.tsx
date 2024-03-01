@@ -274,7 +274,7 @@ export default function PreviewBox({
                 }}
             />) : (
                 <>
-                  <div className="flex items-center flex-col">
+                  <div className="flex items-center flex-col mt-[50px]">
                     <Spinner />
                     <span className="text-xs text-gray-700">Please waiting...</span>
                   </div>
@@ -298,7 +298,7 @@ export default function PreviewBox({
       {
           appState !== AppState.CODE_READY && (
               <>
-                <div className="flex items-center flex-col">
+                <div className="flex items-center flex-col mt-[50px]">
                   <Spinner />
                   <span className="text-xs text-gray-700">Please waiting...</span>
                 </div>
