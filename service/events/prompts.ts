@@ -25,25 +25,25 @@ const generateSystemContent = async (
   let systemConent =
     (SYSTEM_MAP as any)[generated_code_config] || REACT_ANTD_SYSTEM_PROMPT;
 
-  if(generated_code_config){
-    if(generated_code_config.includes('antd')){
-      systemConent = `${systemConent} ${(CSS_MAP as any)['antd_reset_css']}`;
-    }else if(generated_code_config.includes('element')){
-      systemConent = `${systemConent} ${(CSS_MAP as any)['element_reset_css']}`;
-    }
-  }
+  // if(generated_code_config){
+  //   if(generated_code_config.includes('antd')){
+  //     systemConent = `${systemConent} ${(CSS_MAP as any)['antd_reset_css']}`;
+  //   }else if(generated_code_config.includes('element')){
+  //     systemConent = `${systemConent} ${(CSS_MAP as any)['element_reset_css']}`;
+  //   }
+  // }
 
   // 选择input text + 技术栈对应的prompt
   if (text_data) {
     systemConent =
       (SYSTEM_MAP as any)[`${generated_code_config}_text`] ||
       REACT_ANTD_SYSTEM_PROMPT_TEXT;
-    systemConent = `${systemConent} ${(CSS_MAP as any)['common']}`;
-    if(text_data.includes('列表') || text_data.includes('list')){
-      systemConent = `${systemConent} ${(CSS_MAP as any)['list_css']}`;
-    }else if(text_data.includes('详情') || text_data.includes('detail')){
-      systemConent = `${systemConent} ${(CSS_MAP as any)['detail_css']}`;
-    }
+    systemConent = `${systemConent} ${(CSS_MAP as any)["common"]}`;
+    // if (text_data.includes("列表") || text_data.includes("list")) {
+    //   systemConent = `${systemConent} ${(CSS_MAP as any)["list_css"]}`;
+    // } else if (text_data.includes("详情") || text_data.includes("detail")) {
+    //   systemConent = `${systemConent} ${(CSS_MAP as any)["detail_css"]}`;
+    // }
   }
 
   // todo: temporary hard code.
