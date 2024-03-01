@@ -111,10 +111,12 @@ function App() {
   }
   useEffect(() => {
     let tempUserStory = window.localStorage.getItem("userStory");
-    let cookieObject: IUserStory = JSON.parse(tempUserStory!);
-    console.log("userStory----", cookieObject.userStory);
-
-    setUserStory(cookieObject.userStory);
+    if (tempUserStory) {
+      let cookieObject: IUserStory = JSON.parse(tempUserStory!);
+      setUserStory(cookieObject.userStory);
+    } else {
+      setUserStory("");
+    }
   }, [window.localStorage]);
 
   // Tracks the currently shown version from app history

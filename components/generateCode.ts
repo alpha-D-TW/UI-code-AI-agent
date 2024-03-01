@@ -149,6 +149,8 @@ export function generateCode(
       const userStoryId = findTemptUsrSToreInfo[0].id;
       userStory = (USER_STORY_MAP as any)[userStoryId];
       window.localStorage.setItem("userStory", JSON.stringify({ userStory }));
+    } else {
+      window.localStorage.setItem("userStory", "");
     }
   }
 
